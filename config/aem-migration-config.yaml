@@ -1,0 +1,29 @@
+dispatcherConverter:
+    # Absolute path to the src folder of the dispatcher sdk
+    sdkSrc:
+    onPremise:
+        # Absolute path to the dispatcher.any file
+        dispatcherAnySrc:
+        httpdSrc:
+        vhostsToConvert:
+        variablesToReplace:
+            TIER: "ENVIRONMENT_TYPE"
+            HOSTADDRESS: "hostAddress"
+            HOSTNAME: "hostName"
+            WWW_SSL_HOSTADDRESS: "www_ssl_hostAddress"
+        appendToVhosts:
+        pathToAppend:
+    ams:
+        # Absolute path to dispatcher config folder
+        cfg:
+repositoryModernizer:
+    # groupId to be used for newly created packages
+    newGroupId:
+    # information about projects
+    projects:
+        - # absolute path to the project folder
+          projectPath:
+          # folder name of the existing content package that needs to be restructured
+          existingContentPackageFolderName:
+          # prefix that is to be used to set the artifactId for all newly created ui.apps and ui.content packages
+          newArtifactId:

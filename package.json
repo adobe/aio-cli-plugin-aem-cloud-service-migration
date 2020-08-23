@@ -1,0 +1,89 @@
+{
+    "name": "@adobe/aio-cli-plugin-aem-cloud-migration",
+    "description": "AEM Cloud Service Migration commands for the Adobe I/O CLI",
+    "version": "0.0.0",
+    "repository": "adobe/aio-cli-plugin-aem-cloud-service-migration",
+    "author": "Adobe Inc.",
+    "license": "Apache-2.0",
+    "homepage": "https://github.com/adobe/aio-cli-plugin-aem-cloud-migration",
+    "bugs": "https://github.com/adobe/aio-cli-plugin-aem-cloud-migration/issues",
+    "dependencies": {
+        "@adobe/aio-lib-core-config": "^2.0.0",
+        "@adobe/aio-lib-core-logging": "^1.1.0",
+        "@adobe/aem-cs-source-migration-dispatcher-converter": "file:../aem-cloud-service-source-migration/packages/dispatcher-converter",
+        "@adobe/aem-cs-source-migration-commons": "file:../aem-cloud-service-source-migration/packages/commons",
+        "@oclif/command": "^1.6.1",
+        "@oclif/config": "^1.15.1",
+        "@oclif/errors": "^1.1.2",
+        "js-yaml": "^3.14.0",
+        "yaml": "^1.10.0"
+    },
+    "devDependencies": {
+        "@adobe/eslint-config-aio-lib-config": "^1.2.0",
+        "@oclif/dev-cli": "^1",
+        "@oclif/plugin-help": "^2",
+        "acorn": "^7",
+        "chalk": "^4",
+        "eslint": "^6.2.2",
+        "eslint-config-oclif": "^3.1.0",
+        "eslint-config-standard": "^14.1.1",
+        "eslint-plugin-import": "^2.21.2",
+        "eslint-plugin-jest": "^23.13.2",
+        "eslint-plugin-jsdoc": "^21.0.0",
+        "eslint-plugin-node": "^10.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1",
+        "execa": "^4",
+        "jest": "^24",
+        "jest-haste-map": "^24.5.0",
+        "jest-junit": "^6.0.0",
+        "jest-resolve": "^24.5.0",
+        "stdout-stderr": "^0.1.9"
+    },
+    "engines": {
+        "node": ">=8.0.0"
+    },
+    "files": [
+        "/oclif.manifest.json",
+        "/src"
+    ],
+    "keywords": [
+        "oclif-plugin"
+    ],
+    "oclif": {
+        "commands": "./src/commands",
+        "bin": "./bin/run",
+        "devPlugins": [
+            "@oclif/plugin-help"
+        ],
+        "repositoryPrefix": "<%- repo %>/blob/<%- version %>/<%- commandPath %>"
+    },
+    "main": "src/index.js",
+    "scripts": {
+        "pretest": "eslint src test e2e",
+        "test": "npm run unit-tests",
+        "unit-tests": "jest --ci",
+        "prepack": "oclif-dev manifest && oclif-dev readme",
+        "postpack": "rm -f oclif.manifest.json",
+        "version": "oclif-dev readme && git add README.md",
+        "e2e": "jest --collectCoverage=false --testRegex './e2e/e2e.js'"
+    },
+    "jest": {
+        "collectCoverage": true,
+        "testPathIgnorePatterns": [
+            "<rootDir>/tests/fixtures/"
+        ],
+        "coveragePathIgnorePatterns": [
+            "<rootDir>/tests/fixtures/"
+        ],
+        "reporters": [
+            "default",
+            "jest-junit"
+        ],
+        "testEnvironment": "node",
+        "setupFilesAfterEnv": [
+            "./jest.setup.js"
+        ],
+        "clearMocks": true
+    }
+}

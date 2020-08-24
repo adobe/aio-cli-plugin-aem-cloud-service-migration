@@ -16,12 +16,6 @@ const path = require("path");
 const yaml = require("js-yaml");
 
 const configFileName = "aem-migration-config.yaml";
-const baseRepoResourcePath = path.join(
-    ".",
-    "node_modules",
-    "@adobe",
-    "aem-cs-source-migration-repository-modernizer"
-);
 
 function clearOutputFolder(outputFolderPath) {
     // if `output` folder already exists, delete it
@@ -52,7 +46,6 @@ function createBaseDispatcherConfig(src) {
 }
 
 module.exports = {
-    baseRepoResourcePath,
     clearOutputFolder,
     createBaseDispatcherConfig,
     readConfigFile,

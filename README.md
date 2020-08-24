@@ -39,6 +39,11 @@ customers code, repository structure, and configurations on user's local machine
 
    Following tool packages are  currently available:
    * [Dispatcher Converter tool](#https://github.com/adobe/aem-cloud-service-source-migration/packages/dispatcher-converter) : `@adobe/aem-cs-source-migration-dispatcher-converter`
+
+# Requirements
+
+* Node.js 10.0+
+* [Adobe I/O CLI](https://github.com/adobe/aio-cli)
    
 # Setting up necessary Adobe I/O Dependencies
 
@@ -50,6 +55,12 @@ customers code, repository structure, and configurations on user's local machine
 
 * When you run `$ aio aem-migration --help`, you should be able to see `aem-cloud-service-migration` as an available
  plugin with its sub-commands.
+
+# Updating
+
+```sh-session
+$ aio plugins:update
+```
 
 # Working
 

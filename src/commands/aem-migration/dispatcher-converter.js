@@ -57,7 +57,7 @@ class DispatcherConverterCommand extends Command {
     }
 }
 
-DispatcherConverterCommand.description = `convert existing dispatcher configurations into AEMasCS compatible dispatcher configurations.
+DispatcherConverterCommand.description = `convert existing dispatcher configurations into AEM as a Cloud Service compatible dispatcher configurations.
 Configuring existing on-Premise or Adobe Managed Services (AMS) Dispatcher configurations to AEM as a Cloud
 Service compatible Dispatcher configuration.
 

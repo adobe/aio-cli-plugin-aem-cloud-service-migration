@@ -11,13 +11,13 @@ governing permissions and limitations under the License.
 -->
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/@adobe/aio-cli-plugin-cloud-service-migration.svg)](https://npmjs.org/package/@adobe/aio-cli-plugin-cloud-service-migration)
-[![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-cli-plugin-cloud-service-migration.svg)](https://npmjs.org/package/@adobe/aio-cli-plugin-cloud-service-migration)
-[![Build Status](https://travis-ci.org/adobe/aio-cli-plugin-cloud-service-migration.svg?branch=master)](https://travis-ci.org/adobe/aio-cli-plugin-cloud-service-migration)
+[![Version](https://img.shields.io/npm/v/@adobe/aio-cli-plugin-aem-cloud-service-migration.svg)](https://npmjs.org/package/@adobe/aio-cli-plugin-aem-cloud-service-migration)
+[![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-cli-plugin-aem-cloud-service-migration.svg)](https://npmjs.org/package/@adobe/aio-cli-plugin-aem-cloud-service-migration)
+[![Build Status](https://travis-ci.org/adobe/aio-cli-plugin-aem-cloud-service-migration.svg?branch=master)](https://travis-ci.org/adobe/aio-cli-plugin-aem-cloud-service-migration)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-cli-plugin-cloud-service-migration/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-cli-plugin-cloud-service-migration/)
+[![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-cli-plugin-aem-cloud-service-migration/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-cli-plugin-aem-cloud-service-migration/)
 
-# aio-cli-plugin-cloud-service-migration
+# aio-cli-plugin-aem-cloud-service-migration
 
 Follow the sections below to AEM as a Cloud Service Code Refactoring plugin for the [Adobe I/O CLI](https://github.com/adobe/aio-cli).
 

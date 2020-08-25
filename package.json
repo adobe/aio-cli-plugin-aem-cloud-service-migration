@@ -1,7 +1,7 @@
 {
     "name": "@adobe/aio-cli-plugin-aem-cloud-service-migration",
     "description": "AEM Cloud Service Migration commands for the Adobe I/O CLI",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "repository": "adobe/aio-cli-plugin-aem-cloud-service-migration",
     "author": "Adobe Inc.",
     "license": "Apache-2.0",

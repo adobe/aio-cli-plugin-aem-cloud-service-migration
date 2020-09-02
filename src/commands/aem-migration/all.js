@@ -16,7 +16,11 @@ const RepositoryModernizer = require("@adobe/aem-cs-source-migration-repository-
 const DispatcherConverter = require("@adobe/aem-cs-source-migration-dispatcher-converter");
 const helper = require("../../helper");
 
-function runDispatcherConverter(config, flag) {
+async function runDispatcherConverter(config, command) {
+    const { flags } = command.parse(AllCommand);
+    const flag = flags.type;
+    command.log("\n\nExecuting Dispatcher Converter :");
+    command.log("Converting Dispatcher Configurations...");
     if (flag && flag.toLowerCase() === "ams") {
         helper.createBaseDispatcherConfig(config.dispatcherConverter.ams.cfg);
         let aemDispatcherConfigConverter = new DispatcherConverter.AEMDispatcherConfigConverter(
@@ -32,13 +36,29 @@ function runDispatcherConverter(config, flag) {
         );
         singleFilesConverter.transform();
     }
+    command.log("\nConversion Complete!");
+    command.log(
+        `Please check ${Commons.constants.TARGET_DISPATCHER_SRC_FOLDER} folder for transformed configuration files.`
+    );
+    command.log(
+        `Please check ${Commons.constants.TARGET_DISPATCHER_FOLDER} for summary report.`
+    );
+    command.log(`Please check ${Commons.constants.LOG_FILE} for logs.`);
 }
 
-function runRepositoryModernizer(config) {
-    helper.clearOutputFolder(Commons.constants.TARGET_PROJECT_FOLDER);
-    RepositoryModernizer.performModernization(
+async function runRepositoryModernizer(config, command) {
+    command.log("\n\nExecuting Repository Modernizer :");
+    command.log("Restructuring Repository...");
+    await RepositoryModernizer.performModernization(
         config.repositoryModernizer,
         helper.baseRepoResourcePath
+    );
+    command.log("Restructuring Completed!");
+    command.log(
+        `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for transformed configuration files.`
+    );
+    command.log(
+        `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`
     );
 }
 
@@ -49,30 +69,8 @@ class AllCommand extends Command {
                 Commons.constants.TARGET_DISPATCHER_FOLDER
             );
             let config = helper.readConfigFile(this.config.configDir);
-            const { flags } = this.parse(AllCommand);
-
-            this.log("\n\nExecuting Repository Modernizer :");
-            this.log("Restructuring Repository...");
-            runRepositoryModernizer(config);
-            this.log("Restructuring Completed!");
-            this.log(
-                `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for transformed configuration files.`
-            );
-            this.log(
-                `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`
-            );
-
-            this.log("\n\nExecuting Dispatcher Converter :");
-            this.log("Converting Dispatcher Configurations...");
-            runDispatcherConverter(config, flags.type);
-            this.log("\nConversion Complete!");
-            this.log(
-                `Please check ${Commons.constants.TARGET_DISPATCHER_SRC_FOLDER} folder for transformed configuration files.`
-            );
-            this.log(
-                `Please check ${Commons.constants.TARGET_DISPATCHER_FOLDER} for summary report.`
-            );
-            this.log(`Please check ${Commons.constants.LOG_FILE} for logs.`);
+            await runRepositoryModernizer(config, this);
+            await runDispatcherConverter(config, this);
         } catch (e) {
             this.error(e);
         }

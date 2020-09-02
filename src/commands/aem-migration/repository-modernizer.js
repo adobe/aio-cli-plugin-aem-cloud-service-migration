@@ -21,7 +21,7 @@ class RepositoryModernizerCommand extends Command {
         try {
             helper.clearOutputFolder(Commons.constants.TARGET_PROJECT_FOLDER);
             let config = helper.readConfigFile(this.config.configDir);
-            RepositoryModernizer.performModernization(
+            await RepositoryModernizer.performModernization(
                 config.repositoryModernizer,
                 helper.baseRepoResourcePath
             );

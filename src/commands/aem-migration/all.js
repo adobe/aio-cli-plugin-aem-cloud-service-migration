@@ -17,9 +17,10 @@ const DispatcherConverter = require("@adobe/aem-cs-source-migration-dispatcher-c
 const helper = require("../../helper");
 
 async function runDispatcherConverter(config, command) {
+    helper.clearOutputFolder(Commons.constants.TARGET_DISPATCHER_FOLDER);
     const { flags } = command.parse(AllCommand);
     const flag = flags.type;
-    command.log("\n\nExecuting Dispatcher Converter :");
+    command.log("\n********** Executing Dispatcher Converter **********");
     command.log("Converting Dispatcher Configurations...");
     if (flag && flag.toLowerCase() === "ams") {
         helper.createBaseDispatcherConfig(config.dispatcherConverter.ams.cfg);
@@ -43,11 +44,12 @@ async function runDispatcherConverter(config, command) {
     command.log(
         `Please check ${Commons.constants.TARGET_DISPATCHER_FOLDER} for summary report.`
     );
-    command.log(`Please check ${Commons.constants.LOG_FILE} for logs.`);
+    command.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
 }
 
 async function runRepositoryModernizer(config, command) {
-    command.log("\n\nExecuting Repository Modernizer :");
+    helper.clearOutputFolder(Commons.constants.TARGET_PROJECT_FOLDER);
+    command.log("\n********** Executing Repository Modernizer **********");
     command.log("Restructuring Repository...");
     await RepositoryModernizer.performModernization(
         config.repositoryModernizer,
@@ -60,14 +62,12 @@ async function runRepositoryModernizer(config, command) {
     command.log(
         `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`
     );
+    command.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
 }
 
 class AllCommand extends Command {
     async run() {
         try {
-            helper.clearOutputFolder(
-                Commons.constants.TARGET_DISPATCHER_FOLDER
-            );
             let config = helper.readConfigFile(this.config.configDir);
             await runRepositoryModernizer(config, this);
             await runDispatcherConverter(config, this);

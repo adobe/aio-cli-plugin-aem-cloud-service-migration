@@ -17,7 +17,8 @@ const helper = require("../../helper");
 
 class RepositoryModernizerCommand extends Command {
     async run() {
-        this.log("\nRestructuring Repository..");
+        this.log("\n********** Executing Repository Modernizer **********");
+        this.log("Restructuring Repository..");
         try {
             helper.clearOutputFolder(Commons.constants.TARGET_PROJECT_FOLDER);
             let config = helper.readConfigFile(this.config.configDir);
@@ -32,7 +33,7 @@ class RepositoryModernizerCommand extends Command {
             this.log(
                 `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`
             );
-            this.log(`Please check ${Commons.constants.LOG_FILE} for logs.`);
+            this.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
         } catch (e) {
             this.error(e);
         }

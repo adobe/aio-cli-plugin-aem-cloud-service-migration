@@ -39,6 +39,7 @@ customers code, repository structure, and configurations on user's local machine
 
    Following tool packages are  currently available:
    * [Dispatcher Converter tool](#https://github.com/adobe/aem-cloud-service-source-migration/packages/dispatcher-converter) : `@adobe/aem-cs-source-migration-dispatcher-converter`
+   * [Repository Modernizer tool](#https://github.com/adobe/aem-cloud-service-source-migration/packages/repository-modernizer) : `@adobe/aem-cs-source-migration-repository-modernizer`
 
 # Requirements
 
@@ -73,6 +74,36 @@ Once the necessary dependencies are installed:
 # Commands
 
 Follow the sections below to learn about commands and their execution.
+
+## `aio aem-migration:all`
+
+This command executes all the source refactoring tools.
+
+### Configurations
+
+Refer to [config](./config/README.md) for more details.
+
+```
+USAGE
+  $ aio aem-migration:all
+
+OPTIONS
+  -t, --type=ams|on-premise  [default: on-premise] the type of AEM provisioning (ams or on-prem)
+  --help                     show help
+
+DESCRIPTION
+  Available migration tools :
+  * dispatcher-converter
+  * repository-modernizer
+
+EXAMPLES
+  $ aio aem-migration:all
+  $ aio aem-migration:all -t=ams
+  $ aio aem-migration:all -t=on-premise
+
+```
+
+Refer to Code :*[src/commands/aem-migration/all.js](./src/commands/aem-migration/all.js)*
 
 ## `aio aem-migration:dispatcher-converter` 
 
@@ -139,36 +170,6 @@ EXAMPLE
 
 Refer to Code: *[src/commands/aem-migration/repository-modernizer.js](./src/commands/aem-migration/repository-modernizer.js)*
 
-
-## `aio aem-migration:all`
-
-This command executes all the source refactoring tools.
-
-### Configurations
-
-Refer to [config](./config/README.md) for more details.
-
-```
-USAGE
-  $ aio aem-migration:all
-
-OPTIONS
-  -t, --type=ams|on-premise  [default: on-premise] the type of AEM provisioning (ams or on-prem)
-  --help                     show help
-
-DESCRIPTION
-  Available migration tools :
-  * dispatcher-converter
-  * repository-modernizer
-
-EXAMPLES
-  $ aio aem-migration:all
-  $ aio aem-migration:all -t=ams
-  $ aio aem-migration:all -t=on-premise
-
-```
-
-Refer to Code :*[src/commands/aem-migration/all.js](./src/commands/aem-migration/all.js)*
 
 # Adding New Commands
 

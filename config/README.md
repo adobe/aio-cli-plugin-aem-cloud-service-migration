@@ -54,3 +54,70 @@ dispatcherConverter:
     ams:
         cfg: "/Users/{username}/some/path/to/dispatcher/folder"
 ```
+### repository-modernizer
+
+The repository modernizer expects the following configurations to be specified for execution :
+
+-   `groupId` : The `groupId` to be used for newly created artifacts.
+-   `parentPom` : Add the required information about parent pom
+    - `path` : The absolute path to the existing parent pom file.
+    - `artifactId` : The `artifactId` to be set for the parent pom.
+    - `appTitle` : The application title to be set for the parent pom.
+-   `all` : Add the required information for `all` package
+    - `artifactId` : The prefix that is to be used to set the artifactId for the `all` package.
+    - `appTitle` : The application title.
+-   `projects` : Add the required information about all the projects you want to restructure.
+    (NOTE : Expects an array of project details objects.)
+    -   `projectPath` : The absolute path to the project folder.
+    -   `existingContentPackageFolder` : relative path(s) (w.r.t. the project folder) to the existing
+     content package(s) that needs to be restructured. (NOTE : Expects an array of relative paths.)
+    -   `relativePathToExistingFilterXml` : The relative path (w.r.t. the existing content package
+        folder) to the vault filter.xml file. For example : `/src/main/content/META-INF/vault/filter.xml`
+    -   `relativePathToExistingJcrRoot` : The relative path (w.r.t. the existing content package
+        folder) to the jcr_root directory. For example : `/src/main/content/jcr_root`
+    -   `artifactId` : The prefix that is to be used to set the artifactId for all newly
+        created `ui.apps` and `ui.content` packages.
+    -   `appTitle` : The application title.
+
+Example:
+
+```@yaml
+repositoryModernizer:
+  # groupId to be used for newly created packages
+  groupId: com-xyz-aem
+  # information about parent pom
+  parentPom:
+    # absolute path to the parent pom file
+    path: /Users/{username}/some/path/to/xyz-aem/pom.xml
+    # the artifactId to be set for the parent pom
+    artifactId: xyz-aem-parent
+    # the application title to be set for the parent pom
+    appTitle: XYZ-AEM Parent
+  # information required for all package
+  all:
+    # prefix that is to be used to set the artifactId for all package
+    artifactId: xyz-aem
+    # application title
+    appTitle: XYZ-AEM Code Repository
+  # information about projects
+  projects:
+    - # absolute path to the project folder
+      projectPath: /Users/{username}/some/path/to/xyz-aem
+      # relative path(s) (w.r.t. the project folder) to the existing content package(s) that needs to be restructured
+      # (expects one or more relative paths to be provided in array format)
+      existingContentPackageFolder:
+        - /ui.apps
+        - /ui.content
+        - /ui.permissions
+        - /oak-index-definitions
+      # relative path (w.r.t. the existing content package folder) to the filter.xml file
+      # (If not specified, default path `/src/main/content/META-INF/vault/filter.xml` will be used.)
+      relativePathToExistingFilterXml:
+      # relative path (w.r.t. the existing content package folder) to the jcr_root directory
+      # (If not specified, default path `/src/main/content/jcr_root` will be used)
+      relativePathToExistingJcrRoot:
+      # prefix that is to be used to set the artifactId for newly created ui.apps and ui.content packages
+      artifactId: xyz-content-aem
+      # application title
+      appTitle: XYZ
+```

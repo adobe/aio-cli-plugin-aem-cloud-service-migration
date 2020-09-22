@@ -39,6 +39,7 @@ customers code, repository structure, and configurations on user's local machine
 
    Following tool packages are  currently available:
    * [Dispatcher Converter tool](#https://github.com/adobe/aem-cloud-service-source-migration/packages/dispatcher-converter) : `@adobe/aem-cs-source-migration-dispatcher-converter`
+   * [Repository Modernizer tool](#https://github.com/adobe/aem-cloud-service-source-migration/packages/repository-modernizer) : `@adobe/aem-cs-source-migration-repository-modernizer`
 
 # Requirements
 
@@ -74,6 +75,36 @@ Once the necessary dependencies are installed:
 
 Follow the sections below to learn about commands and their execution.
 
+## `aio aem-migration:all`
+
+This command executes all the source refactoring tools.
+
+### Configurations
+
+Refer to [config](./config/README.md) for more details.
+
+```
+USAGE
+  $ aio aem-migration:all
+
+OPTIONS
+  -t, --type=ams|on-premise  [default: on-premise] the type of AEM provisioning (ams or on-prem)
+  --help                     show help
+
+DESCRIPTION
+  Available migration tools :
+  * dispatcher-converter
+  * repository-modernizer
+
+EXAMPLES
+  $ aio aem-migration:all
+  $ aio aem-migration:all -t=ams
+  $ aio aem-migration:all -t=on-premise
+
+```
+
+Refer to Code :*[src/commands/aem-migration/all.js](./src/commands/aem-migration/all.js)*
+
 ## `aio aem-migration:dispatcher-converter` 
 
 This command converts an existing dispatcher configurations into AEM as a Cloud Service compatible dispatcher configurations.
@@ -105,6 +136,40 @@ EXAMPLES
 ```
 
 Refer to Code: *[src/commands/aem-migration/dispatcher-converter.js](./src/commands/aem-migration/dispatcher-converter.js)*.
+
+## Command: `aio aem-migration:repository-modernizer`
+
+This command restructures an existing projects packages into AEM as a Cloud Service compatible packages.
+
+### Configurations
+
+Refer to [config](./config/README.md)
+for more info.
+
+```
+USAGE
+  $ aio aem-migration:repository-modernizer
+
+OPTIONS
+  --help                     show help
+
+DESCRIPTION
+  AEM requires a separation of content and code, which means a single content package cannot deploy to both /apps
+  and runtime-writable areas (for example, /content , /conf , /home , or anything not /apps ) of the repository.
+  Instead, the application must separate code and content into discrete packages for deployment into AEM.
+
+  Repository Modernizer automates the separation of such packages into :
+  * ui.apps package, or Code Package
+  * ui.content package, or Content Package
+  * all (container) package that includes the above packages as embeds.
+
+EXAMPLE
+  $ aio aem-migration:repository-modernizer
+
+```
+
+Refer to Code: *[src/commands/aem-migration/repository-modernizer.js](./src/commands/aem-migration/repository-modernizer.js)*
+
 
 # Adding New Commands
 

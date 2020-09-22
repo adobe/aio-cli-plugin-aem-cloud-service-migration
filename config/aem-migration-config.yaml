@@ -16,3 +16,38 @@ dispatcherConverter:
     ams:
         # Absolute path to dispatcher config folder
         cfg:
+repositoryModernizer:
+    # groupId to be used for newly created packages
+    groupId:
+    # information about parent pom
+    parentPom:
+        # absolute path to the parent pom file
+        path:
+        # the artifactId to be set for the parent pom
+        artifactId:
+        # the application title to be set for the parent pom
+        appTitle:
+    # information required for all package
+    all:
+        # prefix that is to be used to set the artifactId for all package
+        artifactId:
+        # application title
+        appTitle:
+    # information about projects
+    projects:
+        - # absolute path to the project folder
+          projectPath:
+          # relative path(s) (w.r.t. the project folder) to the existing content package(s) that needs to be restructured
+          # (expects one or more relative paths to be provided in array format)
+          existingContentPackageFolder:
+              -
+          # relative path (w.r.t. the existing content package folder) to the filter.xml file
+          # (If not specified, default path `/src/main/content/META-INF/vault/filter.xml` will be used.)
+          relativePathToExistingFilterXml:
+          # relative path (w.r.t. the existing content package folder) to the jcr_root directory
+          # (If not specified, default path `/src/main/content/jcr_root` will be used)
+          relativePathToExistingJcrRoot:
+          # prefix that is to be used to set the artifactId for newly created ui.apps and ui.content packages
+          artifactId:
+          # application title
+          appTitle:

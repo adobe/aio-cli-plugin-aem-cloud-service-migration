@@ -17,7 +17,8 @@ const helper = require("../../helper");
 
 class DispatcherConverterCommand extends Command {
     async run() {
-        this.log("\nConverting Dispatcher Configurations...");
+        this.log("\n********** Executing Dispatcher Converter **********");
+        this.log("Converting Dispatcher Configurations...");
         try {
             helper.clearOutputFolder(
                 Commons.constants.TARGET_DISPATCHER_FOLDER

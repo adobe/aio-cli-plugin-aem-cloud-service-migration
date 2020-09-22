@@ -73,6 +73,9 @@ describe("Test Command", () => {
                 expect(helper.clearOutputFolder).toHaveBeenCalledWith(
                     Commons.constants.TARGET_DISPATCHER_FOLDER
                 );
+                expect(helper.clearOutputFolder).toHaveBeenCalledWith(
+                    Commons.constants.TARGET_PROJECT_FOLDER
+                );
                 expect(
                     DispatcherConverter.AEMDispatcherConfigConverter
                 ).toHaveBeenCalledTimes(1);

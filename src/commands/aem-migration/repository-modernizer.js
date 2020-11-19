@@ -28,7 +28,7 @@ class RepositoryModernizerCommand extends Command {
             );
             this.log("Restructuring Completed!");
             this.log(
-                `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for transformed configuration files.`
+                `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for restructured project packages.`
             );
             this.log(
                 `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`

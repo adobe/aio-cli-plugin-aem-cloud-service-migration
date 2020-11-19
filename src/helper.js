@@ -23,6 +23,13 @@ const baseRepoResourcePath = path.join(
     "aem-cs-source-migration-repository-modernizer"
 );
 
+const baseIndexDefResourcePath = path.join(
+    ".",
+    "node_modules",
+    "@adobe",
+    "aem-cs-source-migration-index-converter"
+);
+
 function clearOutputFolder(outputFolderPath) {
     // if `output` folder already exists, delete it
     if (fs.existsSync(outputFolderPath)) {
@@ -53,6 +60,7 @@ function createBaseDispatcherConfig(src) {
 
 module.exports = {
     baseRepoResourcePath,
+    baseIndexDefResourcePath,
     clearOutputFolder,
     createBaseDispatcherConfig,
     readConfigFile,

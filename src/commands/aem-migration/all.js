@@ -57,10 +57,28 @@ async function runRepositoryModernizer(config, command) {
     );
     command.log("Restructuring Completed!");
     command.log(
-        `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for transformed configuration files.`
+        `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for restructured project packages.`
     );
     command.log(
         `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`
+    );
+    command.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
+}
+
+async function runIndexConverter(config, command) {
+    helper.clearOutputFolder(Commons.constants.TARGET_PROJECT_FOLDER);
+    command.log("\n********** Executing Index Converter **********");
+    command.log("Staring Index Conversion...");
+    IndexConverter.performIndexConversion(
+        config.indexConverter,
+        helper.baseIndexDefResourcePath
+    );
+    command.log("Index Conversion Completed!");
+    command.log(
+        `Please check ${Commons.constants.TARGET_INDEX_DEF_FOLDER} folder for converted index definitions.`
+    );
+    command.log(
+        `Please check ${Commons.constants.TARGET_INDEX_DEF_FOLDER} for summary report.`
     );
     command.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
 }
@@ -69,8 +87,9 @@ class AllCommand extends Command {
     async run() {
         try {
             let config = helper.readConfigFile(this.config.configDir);
-            await runRepositoryModernizer(config, this);
             await runDispatcherConverter(config, this);
+            await runRepositoryModernizer(config, this);
+            await runIndexConverter(config, this);
         } catch (e) {
             this.error(e);
         }
@@ -80,7 +99,8 @@ class AllCommand extends Command {
 AllCommand.description = `execute all source migration tools.
 Available migration tools :
 * dispatcher-converter
-* repository-modernizer`;
+* repository-modernizer
+* index-converter`;
 
 AllCommand.flags = {
     type: flags.string({

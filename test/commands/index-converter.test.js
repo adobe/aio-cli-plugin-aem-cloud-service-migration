@@ -8,9 +8,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const RepositoryModernizerCommand = require("../../src/commands/aem-migration/repository-modernizer");
+const IndexConverterCommand = require("../../src/commands/aem-migration/index-converter");
 const Commons = require("@adobe/aem-cs-source-migration-commons");
-const RepositoryModernizer = require("@adobe/aem-cs-source-migration-repository-modernizer");
+const IndexConverter = require("@adobe/aem-cs-source-migration-index-converter");
 const helper = require("../../src/helper");
 const fs = require("fs");
 const path = require("path");
@@ -18,7 +18,7 @@ const yaml = require("js-yaml");
 const { stdout } = require("stdout-stderr");
 
 jest.mock("../../src/helper");
-jest.mock("@adobe/aem-cs-source-migration-repository-modernizer");
+jest.mock("@adobe/aem-cs-source-migration-index-converter");
 
 const configFileName = "aem-migration-config.yaml";
 const configDir = path.join(process.cwd(), "config");
@@ -30,18 +30,18 @@ beforeAll(() => stdout.start());
 afterAll(() => stdout.stop());
 
 test("exports", async () => {
-    expect(typeof RepositoryModernizerCommand).toEqual("function");
+    expect(typeof IndexConverterCommand).toEqual("function");
 });
 
 test("description", async () => {
-    expect(RepositoryModernizerCommand.description).toBeDefined();
+    expect(IndexConverterCommand.description).toBeDefined();
 });
 
 describe("Test Command", () => {
     let command;
 
     beforeEach(() => {
-        command = new RepositoryModernizerCommand([]);
+        command = new IndexConverterCommand([]);
     });
 
     afterEach(() => {
@@ -53,23 +53,23 @@ describe("Test Command", () => {
             expect(command.run).toBeInstanceOf(Function);
         });
 
-        test("calls RepositoryModernizer", () => {
+        test("calls IndexConverter", () => {
             command.config = {
                 configDir: configDir,
             };
             helper.clearOutputFolder.mockResolvedValue(true);
             helper.readConfigFile.mockReturnValue(config);
-            RepositoryModernizer.performModernization.mockResolvedValue(true);
+            IndexConverter.performIndexConversion.mockResolvedValue(true);
             return command.run().then(() => {
                 expect(helper.readConfigFile).toHaveBeenCalledWith(configDir);
                 expect(helper.clearOutputFolder).toHaveBeenCalledWith(
-                    Commons.constants.TARGET_PROJECT_FOLDER
+                    Commons.constants.TARGET_INDEX_DEF_FOLDER
                 );
                 expect(
-                    RepositoryModernizer.performModernization
+                    IndexConverter.performIndexConversion
                 ).toHaveBeenCalledWith(
-                    config.repositoryModernizer,
-                    helper.baseRepoResourcePath
+                    config.indexConverter,
+                    helper.baseIndexDefResourcePath
                 );
             });
         });

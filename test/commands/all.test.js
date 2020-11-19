@@ -12,6 +12,7 @@ const AllCommand = require("../../src/commands/aem-migration/all");
 const Commons = require("@adobe/aem-cs-source-migration-commons");
 const DispatcherConverter = require("@adobe/aem-cs-source-migration-dispatcher-converter");
 const RepositoryModernizer = require("@adobe/aem-cs-source-migration-repository-modernizer");
+const IndexConverter = require("@adobe/aem-cs-source-migration-index-converter");
 const helper = require("../../src/helper");
 const fs = require("fs");
 const path = require("path");
@@ -21,6 +22,7 @@ const { stdout } = require("stdout-stderr");
 jest.mock("../../src/helper");
 jest.mock("@adobe/aem-cs-source-migration-dispatcher-converter");
 jest.mock("@adobe/aem-cs-source-migration-repository-modernizer");
+jest.mock("@adobe/aem-cs-source-migration-index-converter");
 
 const configFileName = "aem-migration-config.yaml";
 const configDir = path.join(process.cwd(), "config");
@@ -68,6 +70,7 @@ describe("Test Command", () => {
             helper.readConfigFile.mockReturnValue(config);
             helper.createBaseDispatcherConfig.mockResolvedValue(true);
             RepositoryModernizer.performModernization.mockResolvedValue(true);
+            IndexConverter.performIndexConversion.mockResolvedValue(true);
             return command.run().then(() => {
                 expect(helper.readConfigFile).toHaveBeenCalledWith(configDir);
                 expect(helper.clearOutputFolder).toHaveBeenCalledWith(
@@ -75,6 +78,9 @@ describe("Test Command", () => {
                 );
                 expect(helper.clearOutputFolder).toHaveBeenCalledWith(
                     Commons.constants.TARGET_PROJECT_FOLDER
+                );
+                expect(helper.clearOutputFolder).toHaveBeenCalledWith(
+                    Commons.constants.TARGET_INDEX_DEF_FOLDER
                 );
                 expect(
                     DispatcherConverter.AEMDispatcherConfigConverter
@@ -88,6 +94,12 @@ describe("Test Command", () => {
                     config.repositoryModernizer,
                     helper.baseRepoResourcePath
                 );
+                expect(
+                    IndexConverter.performIndexConversion
+                ).toHaveBeenCalledWith(
+                    config.indexConverter,
+                    helper.baseIndexDefResourcePath
+                );
             });
         });
 
@@ -99,10 +111,17 @@ describe("Test Command", () => {
             helper.readConfigFile.mockReturnValue(config);
             helper.createBaseDispatcherConfig.mockResolvedValue(true);
             RepositoryModernizer.performModernization.mockResolvedValue(true);
+            IndexConverter.performIndexConversion.mockResolvedValue(true);
             return command.run().then(() => {
                 expect(helper.readConfigFile).toHaveBeenCalledWith(configDir);
                 expect(helper.clearOutputFolder).toHaveBeenCalledWith(
                     Commons.constants.TARGET_DISPATCHER_FOLDER
+                );
+                expect(helper.clearOutputFolder).toHaveBeenCalledWith(
+                    Commons.constants.TARGET_PROJECT_FOLDER
+                );
+                expect(helper.clearOutputFolder).toHaveBeenCalledWith(
+                    Commons.constants.TARGET_INDEX_DEF_FOLDER
                 );
                 expect(
                     DispatcherConverter.SingleFilesConverter
@@ -115,6 +134,12 @@ describe("Test Command", () => {
                 ).toHaveBeenCalledWith(
                     config.repositoryModernizer,
                     helper.baseRepoResourcePath
+                );
+                expect(
+                    IndexConverter.performIndexConversion
+                ).toHaveBeenCalledWith(
+                    config.indexConverter,
+                    helper.baseIndexDefResourcePath
                 );
             });
         });

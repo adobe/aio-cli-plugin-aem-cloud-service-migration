@@ -51,3 +51,16 @@ repositoryModernizer:
           artifactId:
           # application title
           appTitle:
+indexConverter:
+    # Absolute path to the jcr_root directory of the package containing the Ensure Index Definitions
+    # (please ignore if there are no Ensure Index Definitions)
+    # eg. /Users/xyz/sampleCode/content/src/main/content/jcr_root
+    ensureIndexDefinitionContentPackageJcrRootPath:
+    # Version of AEM customer is on, used to determine the baseline index definitions
+    aemVersion:
+    # Path to the customer OAK Index Definition xml file
+    # eg /Users/xyz/sampleCode/ui.apps/src/main/content/jcr_root/_oak_index
+    xmlPath:
+    # Path to the existing package `filter.xml` file
+    # eg /Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml
+    filterXMLPath:

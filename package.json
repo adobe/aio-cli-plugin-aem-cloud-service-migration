@@ -14,7 +14,7 @@
         "@adobe/aio-lib-core-config": "^2.0.0",
         "@adobe/aio-lib-core-logging": "^1.1.0",
         "@adobe/aem-cs-source-migration-dispatcher-converter": "^0.0.1",
-        "@adobe/aem-cs-source-migration-commons": "^0.0.2",
+        "@adobe/aem-cs-source-migration-commons": "file:../../../Git_repos/Fork/aem-cloud-service-source-migration/packages/commons",
         "@adobe/aem-cs-source-migration-repository-modernizer": "^0.0.1",
         "@adobe/aem-cs-source-migration-index-converter": "file:../../../Git_repos/Fork/aem-cloud-service-source-migration/packages/index-converter",
         "@oclif/command": "^1.6.1",

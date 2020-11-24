@@ -14,6 +14,7 @@ const { Command, flags } = require("@oclif/command");
 const Commons = require("@adobe/aem-cs-source-migration-commons");
 const RepositoryModernizer = require("@adobe/aem-cs-source-migration-repository-modernizer");
 const DispatcherConverter = require("@adobe/aem-cs-source-migration-dispatcher-converter");
+const IndexConverter = require("@adobe/aem-cs-source-migration-index-converter");
 const helper = require("../../helper");
 
 async function runDispatcherConverter(config, command) {
@@ -66,7 +67,7 @@ async function runRepositoryModernizer(config, command) {
 }
 
 async function runIndexConverter(config, command) {
-    helper.clearOutputFolder(Commons.constants.TARGET_PROJECT_FOLDER);
+    helper.clearOutputFolder(Commons.constants.TARGET_INDEX_FOLDER);
     command.log("\n********** Executing Index Converter **********");
     command.log("Staring Index Conversion...");
     IndexConverter.performIndexConversion(
@@ -75,10 +76,10 @@ async function runIndexConverter(config, command) {
     );
     command.log("Index Conversion Completed!");
     command.log(
-        `Please check ${Commons.constants.TARGET_INDEX_DEF_FOLDER} folder for converted index definitions.`
+        `Please check ${Commons.constants.TARGET_INDEX_FOLDER} folder for converted index definitions.`
     );
     command.log(
-        `Please check ${Commons.constants.TARGET_INDEX_DEF_FOLDER} for summary report.`
+        `Please check ${Commons.constants.TARGET_INDEX_FOLDER} for summary report.`
     );
     command.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
 }

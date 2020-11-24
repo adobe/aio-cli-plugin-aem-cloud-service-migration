@@ -80,7 +80,7 @@ describe("Test Command", () => {
                     Commons.constants.TARGET_PROJECT_FOLDER
                 );
                 expect(helper.clearOutputFolder).toHaveBeenCalledWith(
-                    Commons.constants.TARGET_INDEX_DEF_FOLDER
+                    Commons.constants.TARGET_INDEX_FOLDER
                 );
                 expect(
                     DispatcherConverter.AEMDispatcherConfigConverter
@@ -121,7 +121,7 @@ describe("Test Command", () => {
                     Commons.constants.TARGET_PROJECT_FOLDER
                 );
                 expect(helper.clearOutputFolder).toHaveBeenCalledWith(
-                    Commons.constants.TARGET_INDEX_DEF_FOLDER
+                    Commons.constants.TARGET_INDEX_FOLDER
                 );
                 expect(
                     DispatcherConverter.SingleFilesConverter

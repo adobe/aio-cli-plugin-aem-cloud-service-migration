@@ -121,3 +121,30 @@ repositoryModernizer:
       # application title
       appTitle: XYZ
 ```
+
+### index-converter
+
+The repository modernizer expects the following configurations to be specified for execution :
+-   `ensureIndexDefinitionContentPackageJcrRootPath` : Absolute path to the jcr_root directory
+ of the package containing the Ensure Index Definitions (please ignore if there are no Ensure Index Definitions).
+-   `aemVersion` : Version of AEM customer is on, used to determine the baseline index definitions.
+-   `xmlPath` : Path to the customer OAK Index Definition xml file.
+-   `filterXMLPath` : Path to the existing package `filter.xml` file.
+
+Example:
+
+```@yaml
+indexConverter:
+    # Absolute path to the jcr_root directory of the package containing the Ensure Index Definitions
+    # (please ignore if there are no Ensure Index Definitions)
+    # eg. /Users/xyz/sampleCode/content/src/main/content/jcr_root
+    ensureIndexDefinitionContentPackageJcrRootPath: "/Users/xyz/sampleCode/content/src/main/content/jcr_root"
+    # Version of AEM customer is on, used to determine the baseline index definitions
+    aemVersion: 64
+    # Path to the customer OAK Index Definition xml file
+    # eg /Users/xyz/sampleCode/ui.apps/src/main/content/jcr_root/_oak_index
+    xmlPath:"/Users/xyz/sampleCode/ui.apps/src/main/content/jcr_root/_oak_index"
+    # Path to the existing package `filter.xml` file
+    # eg /Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml
+    filterXMLPath:"/Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml"
+```

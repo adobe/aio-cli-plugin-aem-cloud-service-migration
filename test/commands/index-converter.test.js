@@ -63,7 +63,7 @@ describe("Test Command", () => {
             return command.run().then(() => {
                 expect(helper.readConfigFile).toHaveBeenCalledWith(configDir);
                 expect(helper.clearOutputFolder).toHaveBeenCalledWith(
-                    Commons.constants.TARGET_INDEX_DEF_FOLDER
+                    Commons.constants.TARGET_INDEX_FOLDER
                 );
                 expect(
                     IndexConverter.performIndexConversion

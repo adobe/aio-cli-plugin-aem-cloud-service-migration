@@ -58,9 +58,10 @@ indexConverter:
     ensureIndexDefinitionContentPackageJcrRootPath:
     # Version of AEM customer is on, used to determine the baseline index definitions
     aemVersion:
-    # Path to the customer OAK Index Definition xml file
+    # Path to the customer OAK Index Definition directory
+    # (please ignore if there are no Oak Index Definitions)
     # eg /Users/xyz/sampleCode/ui.apps/src/main/content/jcr_root/_oak_index
-    xmlPath:
+    customOakIndexDirectoryPath:
     # Path to the existing package `filter.xml` file
     # eg /Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml
     filterXMLPath:

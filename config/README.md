@@ -128,7 +128,7 @@ The repository modernizer expects the following configurations to be specified f
 -   `ensureIndexDefinitionContentPackageJcrRootPath` : Absolute path to the jcr_root directory
  of the package containing the Ensure Index Definitions (please ignore if there are no Ensure Index Definitions).
 -   `aemVersion` : Version of AEM customer is on, used to determine the baseline index definitions.
--   `xmlPath` : Path to the customer OAK Index Definition xml file.
+-   `customOakIndexDirectoryPath` : Path to the customer OAK Index Definition directory.
 -   `filterXMLPath` : Path to the existing package `filter.xml` file.
 
 Example:
@@ -141,9 +141,10 @@ indexConverter:
     ensureIndexDefinitionContentPackageJcrRootPath: "/Users/xyz/sampleCode/content/src/main/content/jcr_root"
     # Version of AEM customer is on, used to determine the baseline index definitions
     aemVersion: 64
-    # Path to the customer OAK Index Definition xml file
+    # Path to the customer OAK Index Definition directory
+    # (please ignore if there are no Oak Index Definitions)
     # eg /Users/xyz/sampleCode/ui.apps/src/main/content/jcr_root/_oak_index
-    xmlPath:"/Users/xyz/sampleCode/ui.apps/src/main/content/jcr_root/_oak_index"
+    customIndexDirectoryPath:"/Users/xyz/sampleCode/ui.apps/src/main/content/jcr_root/_oak_index"
     # Path to the existing package `filter.xml` file
     # eg /Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml
     filterXMLPath:"/Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml"

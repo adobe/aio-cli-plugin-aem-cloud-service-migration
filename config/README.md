@@ -124,9 +124,11 @@ repositoryModernizer:
 
 ### index-converter
 
-The repository modernizer expects the following configurations to be specified for execution :
--   `ensureIndexDefinitionContentPackageJcrRootPath` : Absolute path to the jcr_root directory
- of the package containing the Ensure Index Definitions (please ignore if there are no Ensure Index Definitions).
+The index converter expects the following configurations to be specified for execution :
+-   `ensureIndexDefinitionContentPackageJcrRootPath` : Path to the jcr_root directory of the package
+ containing the **Ensure Index Definitions** (please ignore if there are no Ensure Index Definitions).
+-   `ensureIndexDefinitionConfigPackageJcrRootPath` : Path to the jcr_root directory of the package
+ containing the **Ensure Index OSGI Configuration** (please ignore if there are no Ensure Index Definitions).
 -   `aemVersion` : Version of AEM customer is on, used to determine the baseline index definitions.
 -   `customOakIndexDirectoryPath` : Path to the customer OAK Index Definition directory.
 -   `filterXMLPath` : Path to the existing package `filter.xml` file.
@@ -135,10 +137,14 @@ Example:
 
 ```@yaml
 indexConverter:
-    # Absolute path to the jcr_root directory of the package containing the Ensure Index Definitions
+    # Path to the jcr_root directory of the package containing the Ensure Index Definitions
     # (please ignore if there are no Ensure Index Definitions)
     # eg. /Users/xyz/sampleCode/content/src/main/content/jcr_root
     ensureIndexDefinitionContentPackageJcrRootPath: "/Users/xyz/sampleCode/content/src/main/content/jcr_root"
+    # Path to the jcr_root directory of the package containing the Ensure Oak Index OSGI Configuration
+    # (please ignore if there are no Ensure Index Definitions)
+    # eg. /Users/xyz/sampleCode/CONFIG/src/main/content/jcr_root
+    ensureIndexDefinitionConfigPackageJcrRootPath: "/Users/xyz/sampleCode/CONFIG/src/main/content/jcr_root"
     # Version of AEM customer is on, used to determine the baseline index definitions
     aemVersion: 64
     # Path to the customer OAK Index Definition directory

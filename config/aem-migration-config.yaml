@@ -12,7 +12,8 @@ dispatcherConverter:
             HOSTNAME: "hostName"
             WWW_SSL_HOSTADDRESS: "www_ssl_hostAddress"
         appendToVhosts:
-        pathToAppend:
+        pathToPrepend:
+        portsToMap:
     ams:
         # Absolute path to dispatcher config folder
         cfg:
@@ -52,10 +53,14 @@ repositoryModernizer:
           # application title
           appTitle:
 indexConverter:
-    # Absolute path to the jcr_root directory of the package containing the Ensure Index Definitions
+    # Path to the jcr_root directory of the package containing the Ensure Index Definitions
     # (please ignore if there are no Ensure Index Definitions)
     # eg. /Users/xyz/sampleCode/content/src/main/content/jcr_root
     ensureIndexDefinitionContentPackageJcrRootPath:
+    # Path to the jcr_root directory of the package containing the Ensure Oak Index OSGI Configuration
+    # (please ignore if there are no Ensure Index Definitions)
+    # eg. /Users/xyz/sampleCode/CONFIG/src/main/content/jcr_root
+    ensureIndexDefinitionConfigPackageJcrRootPath:
     # Version of AEM customer is on, used to determine the baseline index definitions
     aemVersion:
     # Path to the customer OAK Index Definition directory

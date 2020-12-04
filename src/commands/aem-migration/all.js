@@ -88,7 +88,7 @@ class AllCommand extends Command {
     async run() {
         try {
             let config = helper.readConfigFile(this.config.configDir);
-            //await runDispatcherConverter(config, this);
+            await runDispatcherConverter(config, this);
             await runRepositoryModernizer(config, this);
             await runIndexConverter(config, this);
         } catch (e) {

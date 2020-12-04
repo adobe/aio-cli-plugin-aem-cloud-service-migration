@@ -1,21 +1,31 @@
 dispatcherConverter:
-    # Absolute path to the src folder of the dispatcher sdk
+    # Absolute path to the src folder of the dispatcher sdk. You must include the src folder itself in the path.
     sdkSrc:
+    # Add information about on-premise dispatcher configuration here
     onPremise:
         # Absolute path to the dispatcher.any file
         dispatcherAnySrc:
+        # Path to the httpd.conf file (the main apache config file).
+        # If `vhostsToConvert` is not specified you can use this property to find vhosts by parsing the main apache file
         httpdSrc:
+        # Array of paths to vhosts files you wish to convert to cloud service configurations.
         vhostsToConvert:
+        # Array of mapped objects that replace existing variables with new variables.
+        # The original variable is first and the variable to replace is second.
         variablesToReplace:
-            TIER: "ENVIRONMENT_TYPE"
-            HOSTADDRESS: "hostAddress"
-            HOSTNAME: "hostName"
-            WWW_SSL_HOSTADDRESS: "www_ssl_hostAddress"
+        # This can be a file that you want to append to every vhost file in case you need logic added to all configurations.
+        # This is useful to replace logic that was once stored in your main apache config file.
         appendToVhosts:
+        # Array of paths to existing dispatcher configuration root folders to scan for the included files.
+        # These paths help to map includes in the configurations to their current location in the provided folder structure.
         pathToPrepend:
+        # Only port 80 is supported in AEM as a Cloud Service - if you were using a non standard port here and need it mapped
+        # in AEM, provide it here - all other vhosts with non default ports will be removed.
         portsToMap:
+    # Add information about Adobe Managed Services dispatcher configuration here
     ams:
-        # Absolute path to dispatcher config folder
+        # Path to dispatcher configuration folder
+        # (expected immediate subfolders - conf, conf.d, conf.dispatcher.d and conf.modules.d)
         cfg:
 repositoryModernizer:
     # groupId to be used for newly created packages
@@ -38,8 +48,8 @@ repositoryModernizer:
     projects:
         - # absolute path to the project folder
           projectPath:
-          # relative path(s) (w.r.t. the project folder) to the existing content package(s) that needs to be restructured
-          # (expects one or more relative paths to be provided in array format)
+          # Array of relative path(s) (w.r.t. the project folder) to the existing content package(s) that needs to be restructured.
+          # NOTE : only content packages are expected here, NOT bundle/jar artifacts
           existingContentPackageFolder:
               -
           # relative path (w.r.t. the existing content package folder) to the filter.xml file

@@ -2,9 +2,9 @@
 
 ## Development
 
-In order to run the aio-cli commands and execute the underlying migration tools, you need to create
-a copy of [aem-migration-config.yaml](./aem-migration-config.yaml) file (with the same name) in your local file system's CLI
-config directory.
+In order to run the aio-cli commands and execute the underlying migration tools, you need to create a copy of 
+[aem-migration-config.yaml](./aem-migration-config.yaml) file (with the SAME NAME) in your local file system's 
+CLI config directory.
 
 -   Unix: `~/.config/@adobe/aio-cli`
 -   Windows: `%LOCALAPPDATA%\@adobe\aio-cli`
@@ -20,38 +20,55 @@ The dispatcher converter configuration uses YAML to define necessary configurati
 
 | Property | Description |
 |---|---|
-| sdkSrc* | The absolute path to your dispatcher sdk source code.  You must include the `src` folder itself in the path. |
-| onPremise/dispatcherAnySrc | Path to the dispatcher.any file - required if you want to convert dispatcher configs |
-| onPremise/httpdSrc | Path to the httpd.conf file - If `vhostsToConvert` is not specified you can use this property to find vhosts by parsing the main apache file |
-| onPremise/vhostsToConvert | Array of paths to vhosts files you wish to convert to cloud service configurations |
-| onPremise/variablesToReplace | Array of mapped objects that replace existing variables with new variables.  The original variable is first and the variable to replace is second |
-| onPremise/appendToVhosts | This can be a file that you want to append to every vhost file in case you need logic added to all configurations - this is useful to replace logic that was once stored in your main apache config file |
-| onPremise/pathToPrepend | This is required if you are converting your dispatcher configurations - this is used to help map includes in the configurations to their current location in the provided folder structure |
-| onPremise/portsToMap | Only port 80 is supported in AEM as a Cloud Service - if you were using a non standard port here and need it mapped in AEM - provide it here - all other vhosts with non default ports will be removed. |
-| ams/cfg* | The path to your configuration folder |
+| sdkSrc* | Path to your dispatcher sdk source code.  You must include the `src` folder itself in the path. |
+| onPremise/dispatcherAnySrc | Path to the dispatcher.any file. |
+| onPremise/httpdSrc | Path to the httpd.conf file (the main apache config file) - If `vhostsToConvert` is not specified you can use this property to find vhosts by parsing the main apache file. |
+| onPremise/vhostsToConvert | Array of paths to vhosts files you wish to convert to cloud service configurations. |
+| onPremise/variablesToReplace | Array of mapped objects that replace existing variables with new variables. The original variable is first and the variable to replace is second. |
+| onPremise/appendToVhosts | This can be a file that you want to append to every vhost file in case you need logic added to all configurations. This is useful to replace logic that was once stored in your main apache config file. |
+| onPremise/pathToPrepend | Array of paths to existing dispatcher configuration root folders to scan for the included files. These paths help to map includes in the configurations to their current location in the provided folder structure. |
+| onPremise/portsToMap | Only port 80 is supported in AEM as a Cloud Service - if you were using a non standard port here and need it mapped in AEM, provide it here - all other vhosts with non default ports will be removed. |
+| ams/cfg* | Path to dispatcher configuration folder (expected immediate subfolders - `conf`, `conf.d`, `conf.dispatcher.d` and `conf.modules.d`) |
 | * denotes required field | |
 
 Example :
 
 ```$yaml
 dispatcherConverter:
+    # Path to the src folder of the dispatcher sdk. You must include the src folder itself in the path.
     sdkSrc: "/Users/{username}/some/path/to/dispatcher-sdk-2.0.21/src"
+    # Add information about on-premise dispatcher configuration here
     onPremise:
+        # Path to the dispatcher.any file
         dispatcherAnySrc: "/Users/{username}/some/path/to/dispatcher.any"
+        # Path to the httpd.conf file (the main apache config file)
+        # If `vhostsToConvert` is not specified you can use this property to find vhosts by parsing the main apache file
         httpdSrc: "/Users/{username}/some/path/to/httpd.conf"
+        # Array of paths to vhosts files you wish to convert to cloud service configurations
         vhostsToConvert:
             - "/Users/{username}/some/path/to/mywebsite.vhost"
             - "/Users/{username}/some/path/to/myotherwebsite.vhost"
+        # Array of mapped objects that replace existing variables with new variables.
+        # The original variable is first and the variable to replace is second
         variablesToReplace:
             TIER: "ENVIRONMENT_TYPE"
+        # This can be a file that you want to append to every vhost file in case you need logic added to all configurations.
+        # This is useful to replace logic that was once stored in your main apache config file.
         appendToVhosts:
             - "/Users/{username}/some/path/to/appendedContent.conf"
+        # Array of paths to existing dispatcher configuration root folders to scan for the included files.
+        # These paths help to map includes in the configurations to their current location in the provided folder structure.
         pathToPrepend:
             - "/Users/{username}/some/path/to/your/httpd/content"
+        # Only port 80 is supported in AEM as a Cloud Service - if you were using a non standard port here and need it mapped
+        # in AEM, provide it here - all other vhosts with non default ports will be removed.
         portsToMap:
             - 8000
             - 8080
+    # Add information about Adobe Managed Services dispatcher configuration here
     ams:
+        # Path to dispatcher configuration folder
+        # (expected immediate subfolders - conf, conf.d, conf.dispatcher.d and conf.modules.d)
         cfg: "/Users/{username}/some/path/to/dispatcher/folder"
 ```
 ### repository-modernizer
@@ -70,7 +87,8 @@ The repository modernizer expects the following configurations to be specified f
     (NOTE : Expects an array of project details objects.)
     -   `projectPath` : The absolute path to the project folder.
     -   `existingContentPackageFolder` : relative path(s) (w.r.t. the project folder) to the existing
-     content package(s) that needs to be restructured. (NOTE : Expects an array of relative paths.)
+     content package(s) that needs to be restructured. (NOTE : Expects an array of relative paths to 
+     existing content packages, NOT bundle/jar artifacts.)
     -   `relativePathToExistingFilterXml` : The relative path (w.r.t. the existing content package
         folder) to the vault filter.xml file. For example : `/src/main/content/META-INF/vault/filter.xml`
     -   `relativePathToExistingJcrRoot` : The relative path (w.r.t. the existing content package
@@ -103,8 +121,8 @@ repositoryModernizer:
   projects:
     - # absolute path to the project folder
       projectPath: /Users/{username}/some/path/to/xyz-aem
-      # relative path(s) (w.r.t. the project folder) to the existing content package(s) that needs to be restructured
-      # (expects one or more relative paths to be provided in array format)
+      # Array of relative path(s) (w.r.t. the project folder) to the existing content package(s) that needs to be restructured.
+      # NOTE : only content packages are expected here, NOT bundle/jar artifacts
       existingContentPackageFolder:
         - /ui.apps
         - /ui.content

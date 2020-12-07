@@ -171,7 +171,7 @@ EXAMPLE
 ```
 ## Command: `aio aem-migration:index-converter`
 
-This command migrate existing Custom Oak Index Defintions into AEMaaCS compatible Custom Oak Index Defintions.
+This command migrates existing Custom Oak Index Defintions into AEM as a Cloud Service compatible Custom Oak Index Defintions.
 
 ### Configurations
 
@@ -193,19 +193,19 @@ DESCRIPTION
 
   Operation for custom OOTB (Product) Oak Index Definition :
   * This tool will parse the Custom OOTB (Product) Oak Index Definition and fetch the associated OOTB Index Definition.
-  * It will compare the Custom OOTB Oak Index Definition to the associated OOTB Index Definition and retrieve the 
-    difference between Custom OOTB Index Definition. and associated OOTB Index Definition. That difference or delta
-    is basically customisation done by the user in OOTB Oak Index Definition.
-  * It will validate the retrieved customisation as per AEMaaCS compatible OAK Index Definitions guidelines.
-  * It will merge validated customisation of Custom OOTB Oak Index Definition to corresponding OAK Index Definition
-    present on AEMaaCS.
+  * It will compare the Custom OOTB Oak Index Definition to the associated OOTB Index Definition and retrieve the
+    difference between Custom OOTB Index Definition. and associated OOTB Index Definition. That difference or delta is
+    basically customization done by the user in OOTB Oak Index Definition.
+  * It will validate the retrieved customization as per AEM as Cloud Service compatible OAK Index Definitions guidelines.
+  * It will merge validated customization of Custom OOTB Oak Index Definition to corresponding OAK Index Definition
+    present on AEM as a Cloud Service.
   Naming convention for Custom OOTB (Product) Oak Index Definition :
        "Name of the corresponding OAK Index Definition on AEMaaCS"-"latest version of this index on AEMaaCS "-"custom"-1
 
-  Operation For newly created custom Oak Index Definition :
-  * It will parse & validate the custom Oak Index Definition as per AEMaaCS compatible OAK Index Definitions guidelines.
+  Operation for newly created custom Oak Index Definition :
+  * It will parse and validate the Custom Oak Index Definition according to AEM as a Cloud Service OAK Index Definitions guidelines.
   * It will rename the Custom Oak Index Definition.
-  Naming convention for Newly created Custom Oak Index Definition :
+  Naming convention for newly created Custom Oak Index Definition :
        "Name of the Custom Oak Index Defintion"-"custom"-1
 
 EXAMPLE
@@ -213,7 +213,7 @@ EXAMPLE
 
 ```
 
-Refer to Code: *[src/commands/aem-migration/repository-modernizer.js](./src/commands/aem-migration/repository-modernizer.js)*
+Refer to Code: *[src/commands/aem-migration/index-converter.js](./src/commands/aem-migration/index-converter.js)*
 
 
 # Adding New Commands

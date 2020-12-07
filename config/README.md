@@ -59,7 +59,7 @@ dispatcherConverter:
         # Array of paths to existing dispatcher configuration root folders to scan for the included files.
         # These paths help to map includes in the configurations to their current location in the provided folder structure.
         pathToPrepend:
-            - "/Users/{username}/some/path/to/your/httpd/content"
+            - "/Users/{username}/some/path/to/your/httpd/content/"
         # Only port 80 is supported in AEM as a Cloud Service - if you were using a non standard port here and need it mapped
         # in AEM, provide it here - all other vhosts with non default ports will be removed.
         portsToMap:

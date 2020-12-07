@@ -18,7 +18,6 @@ const helper = require("../../helper");
 class IndexConverterCommand extends Command {
     async run() {
         this.log("\n********** Executing Index Converter **********");
-        this.log("Staring Index Conversion..");
         try {
             helper.clearOutputFolder(Commons.constants.TARGET_INDEX_FOLDER);
             let config = helper.readConfigFile(this.config.configDir);
@@ -26,14 +25,6 @@ class IndexConverterCommand extends Command {
                 config.indexConverter,
                 helper.baseIndexDefResourcePath
             );
-            this.log("Index Conversion Completed!");
-            this.log(
-                `Please check ${Commons.constants.TARGET_INDEX_FOLDER} folder for converted index definitions.`
-            );
-            this.log(
-                `Please check ${Commons.constants.TARGET_INDEX_FOLDER} for summary report.`
-            );
-            this.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
         } catch (e) {
             this.error(e);
         }
@@ -48,18 +39,19 @@ Custom Oak Index Definitions can be categorized as :
 
 Operation for custom OOTB (Product) Oak Index Definition :
 * This tool will parse the Custom OOTB (Product) Oak Index Definition and fetch the associated OOTB Index Definition.
-* It will compare the Custom OOTB Oak Index Definition to the associated OOTB Index Definition and retrieve the difference
- between Custom OOTB Index Definition. and associated OOTB Index Definition. That difference or delta is basically
- customisation done by the user in OOTB Oak Index Definition.
-* It will validate the retrieved customisation as per AEMaaCS compatible OAK Index Definitions guidelines.
-* It will merge validated customisation of Custom OOTB Oak Index Definition to corresponding OAK Index Definition present on AEMaaCS.
+* It will compare the Custom OOTB Oak Index Definition to the associated OOTB Index Definition and retrieve the 
+ difference between Custom OOTB Index Definition. and associated OOTB Index Definition. That difference or delta is
+ basically customization done by the user in OOTB Oak Index Definition.
+* It will validate the retrieved customization as per AEM as Cloud Service compatible OAK Index Definitions guidelines.
+* It will merge validated customization of Custom OOTB Oak Index Definition to corresponding OAK Index Definition
+ present on AEM as a Cloud Service.
 Naming convention for Custom OOTB (Product) Oak Index Definition :
     "Name of the corresponding OAK Index Definition on AEMaaCS"-"latest version of this index on AEMaaCS "-"custom"-1
 
-Operation For newly created custom Oak Index Definition :
-* It will parse and validate the custom Oak Index Definition as per AEMaaCS compatible OAK Index Definitions guidelines.
+Operation for newly created custom Oak Index Definition :
+* It will parse and validate the Custom Oak Index Definition according to AEM as a Cloud Service OAK Index Definitions guidelines.
 * It will rename the Custom Oak Index Definition.
-Naming convention for Newly created Custom Oak Index Definition :
+Naming convention for newly created Custom Oak Index Definition :
     "Name of the Custom Oak Index Defintion"-"custom"-1`;
 
 IndexConverterCommand.examples = ["$ aio aem-migration:index-converter"];

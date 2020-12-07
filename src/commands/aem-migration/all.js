@@ -69,19 +69,10 @@ async function runRepositoryModernizer(config, command) {
 async function runIndexConverter(config, command) {
     helper.clearOutputFolder(Commons.constants.TARGET_INDEX_FOLDER);
     command.log("\n********** Executing Index Converter **********");
-    command.log("Staring Index Conversion...");
     IndexConverter.performIndexConversion(
         config.indexConverter,
         helper.baseIndexDefResourcePath
     );
-    command.log("Index Conversion Completed!");
-    command.log(
-        `Please check ${Commons.constants.TARGET_INDEX_FOLDER} folder for converted index definitions.`
-    );
-    command.log(
-        `Please check ${Commons.constants.TARGET_INDEX_FOLDER} for summary report.`
-    );
-    command.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
 }
 
 class AllCommand extends Command {

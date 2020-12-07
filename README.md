@@ -162,6 +162,7 @@ DESCRIPTION
 
   Repository Modernizer automates the separation of such packages into :
   * ui.apps package, or Code Package
+  * ui.config package, or OSGi Configurations Package
   * ui.content package, or Content Package
   * all (container) package that includes the above packages as embeds.
 
@@ -169,6 +170,9 @@ EXAMPLE
   $ aio aem-migration:repository-modernizer
 
 ```
+
+Refer to Code: *[src/commands/aem-migration/repository-modernizer.js](./src/commands/aem-migration/repository-modernizer.js)*.
+
 ## Command: `aio aem-migration:index-converter`
 
 This command migrates existing Custom Oak Index Defintions into AEM as a Cloud Service compatible Custom Oak Index Defintions.

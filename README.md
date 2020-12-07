@@ -40,6 +40,7 @@ customers code, repository structure, and configurations on user's local machine
    Following tool packages are  currently available:
    * [Dispatcher Converter tool](#https://github.com/adobe/aem-cloud-service-source-migration/packages/dispatcher-converter) : `@adobe/aem-cs-source-migration-dispatcher-converter`
    * [Repository Modernizer tool](#https://github.com/adobe/aem-cloud-service-source-migration/packages/repository-modernizer) : `@adobe/aem-cs-source-migration-repository-modernizer`
+   * [Index Converter tool](#https://github.com/adobe/aem-cloud-service-source-migration/packages/index-converter) : `@adobe/aem-cs-source-migration-index-converter`
 
 # Requirements
 
@@ -95,6 +96,7 @@ DESCRIPTION
   Available migration tools :
   * dispatcher-converter
   * repository-modernizer
+  * index-converter
 
 EXAMPLES
   $ aio aem-migration:all
@@ -160,6 +162,7 @@ DESCRIPTION
 
   Repository Modernizer automates the separation of such packages into :
   * ui.apps package, or Code Package
+  * ui.config package, or OSGi Configurations Package
   * ui.content package, or Content Package
   * all (container) package that includes the above packages as embeds.
 
@@ -168,7 +171,53 @@ EXAMPLE
 
 ```
 
-Refer to Code: *[src/commands/aem-migration/repository-modernizer.js](./src/commands/aem-migration/repository-modernizer.js)*
+Refer to Code: *[src/commands/aem-migration/repository-modernizer.js](./src/commands/aem-migration/repository-modernizer.js)*.
+
+## Command: `aio aem-migration:index-converter`
+
+This command migrates existing Custom Oak Index Defintions into AEM as a Cloud Service compatible Custom Oak Index Defintions.
+
+### Configurations
+
+Refer to [config](./config/README.md)
+for more info.
+
+```
+USAGE
+  $ aio aem-migration:index-converter
+
+OPTIONS
+  --help                     show help
+
+DESCRIPTION
+  Configuring existing Custom Oak Index Definitions to AEMaaCS compatible Custom Oak Index Defintions.
+  Custom Oak Index Definitions can be categorized as :
+  * Custom OOTB (Product) Oak Index Definitions : Modification into existing OOTB Oak Index Definitions
+  * Newly created Oak Index Definitions
+
+  Operation for custom OOTB (Product) Oak Index Definition :
+  * This tool will parse the Custom OOTB (Product) Oak Index Definition and fetch the associated OOTB Index Definition.
+  * It will compare the Custom OOTB Oak Index Definition to the associated OOTB Index Definition and retrieve the
+    difference between Custom OOTB Index Definition. and associated OOTB Index Definition. That difference or delta is
+    basically customization done by the user in OOTB Oak Index Definition.
+  * It will validate the retrieved customization as per AEM as Cloud Service compatible OAK Index Definitions guidelines.
+  * It will merge validated customization of Custom OOTB Oak Index Definition to corresponding OAK Index Definition
+    present on AEM as a Cloud Service.
+  Naming convention for Custom OOTB (Product) Oak Index Definition :
+       "Name of the corresponding OAK Index Definition on AEMaaCS"-"latest version of this index on AEMaaCS "-"custom"-1
+
+  Operation for newly created custom Oak Index Definition :
+  * It will parse and validate the Custom Oak Index Definition according to AEM as a Cloud Service OAK Index Definitions guidelines.
+  * It will rename the Custom Oak Index Definition.
+  Naming convention for newly created Custom Oak Index Definition :
+       "Name of the Custom Oak Index Defintion"-"custom"-1
+
+EXAMPLE
+  $ aio aem-migration:index-converter
+
+```
+
+Refer to Code: *[src/commands/aem-migration/index-converter.js](./src/commands/aem-migration/index-converter.js)*
 
 
 # Adding New Commands

@@ -28,7 +28,7 @@ class RepositoryModernizerCommand extends Command {
             );
             this.log("Restructuring Completed!");
             this.log(
-                `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for transformed configuration files.`
+                `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for restructured project packages.`
             );
             this.log(
                 `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`
@@ -47,6 +47,7 @@ Instead, the application must separate code and content into discrete packages f
 
 Repository Modernizer automates the separation of such packages into :
 * ui.apps package, or Code Package
+* ui.config package, or OSGi Configurations Package
 * ui.content package, or Content Package
 * all (container) package that includes the above packages as embeds.`;
 

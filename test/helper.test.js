@@ -27,6 +27,7 @@ test("exports", async () => {
     expect(typeof helper.clearOutputFolder).toEqual("function");
     expect(typeof helper.createBaseDispatcherConfig).toEqual("function");
     expect(typeof helper.baseRepoResourcePath).toEqual("string");
+    expect(typeof helper.baseIndexDefResourcePath).toEqual("string");
 });
 
 describe("test readConfigFile()", () => {

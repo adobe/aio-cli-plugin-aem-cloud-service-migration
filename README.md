@@ -61,7 +61,7 @@ customers code, repository structure, and configurations on user's local machine
 # Updating
 
 ```sh-session
-$ aio plugins:update
+$ npm install -g @adobe/aio-cli-plugin-aem-cloud-service-migration
 ```
 
 # Working
@@ -69,7 +69,7 @@ $ aio plugins:update
 Once the necessary dependencies are installed:
 
 * Add the necessary configurations for executing a particular tool. Refer to [config](./config/README.md) for more details.
-* Execute the required tool via the `aio` command.
+* Execute the required tool via the `aio` command (NOTE : Executing any tool would require an administartor session).
 * Check the `target` folder for refactored code or configurations, summary report and tool execution logs.
 
 # Commands

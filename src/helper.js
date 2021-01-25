@@ -17,14 +17,14 @@ const yaml = require("js-yaml");
 
 const configFileName = "aem-migration-config.yaml";
 const baseRepoResourcePath = path.join(
-    ".",
+    path.dirname(__dirname),
     "node_modules",
     "@adobe",
     "aem-cs-source-migration-repository-modernizer"
 );
 
 const baseIndexDefResourcePath = path.join(
-    ".",
+    path.dirname(__dirname),
     "node_modules",
     "@adobe",
     "aem-cs-source-migration-index-converter"
@@ -39,6 +39,10 @@ function clearOutputFolder(outputFolderPath) {
             throw new Error(`Error while deleting ${outputFolderPath}!`);
         }
         Commons.logger.info(outputFolderPath + " cleaned successfully.");
+    }
+    // if target folder doesn't exist, create it
+    if (!fs.existsSync(Commons.constants.TARGET_FOLDER)) {
+        fs.mkdirSync(Commons.constants.TARGET_FOLDER);
     }
 }
 

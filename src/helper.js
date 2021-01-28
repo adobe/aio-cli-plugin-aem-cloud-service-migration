@@ -19,7 +19,7 @@ const configFileName = "aem-migration-config.yaml";
 
 // base paths for resources
 // when it is being executed from cloned repo
-const baseRepoResourcePath = path.join(
+let baseRepoResourcePath = path.join(
     path.dirname(__dirname),
     "node_modules",
     "@adobe",
@@ -33,7 +33,7 @@ if (!fs.existsSync(baseRepoResourcePath)) {
     );
 }
 // when it is being executed from cloned repo
-const baseIndexDefResourcePath = path.join(
+let baseIndexDefResourcePath = path.join(
     path.dirname(__dirname),
     "node_modules",
     "@adobe",

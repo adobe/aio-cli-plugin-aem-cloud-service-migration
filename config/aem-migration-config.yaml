@@ -38,13 +38,18 @@ repositoryModernizer:
         artifactId:
         # the application title to be set for the parent pom
         appTitle:
+        # version to be to be set for the parent pom
+        version:
     # information required for all package
     all:
         # prefix that is to be used to set the artifactId for all package
         artifactId:
         # application title
         appTitle:
-    # information about projects
+        # version to be set for all pom
+        version:
+    # information about projects (expects an array of project information)
+    # NOTE : For multiple projects create separate copies of the info section for each project
     projects:
         - # absolute path to the project folder
           projectPath:
@@ -62,6 +67,10 @@ repositoryModernizer:
           artifactId:
           # application title
           appTitle:
+          # application ID (will be used for config and package folder names)
+          appId:
+          # project specific version to be used for content packages
+          version:
 indexConverter:
     # Path to the jcr_root directory of the package containing the Ensure Index Definitions
     # (please ignore if there are no Ensure Index Definitions)

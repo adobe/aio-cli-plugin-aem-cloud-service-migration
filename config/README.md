@@ -80,11 +80,14 @@ The repository modernizer expects the following configurations to be specified f
     - `path` : The absolute path to the existing parent pom file.
     - `artifactId` : The `artifactId` to be set for the parent pom.
     - `appTitle` : The application title to be set for the parent pom.
+    - `version` : The version to be set for the parent pom.
 -   `all` : Add the required information for `all` package
     - `artifactId` : The prefix that is to be used to set the artifactId for the `all` package.
     - `appTitle` : The application title.
+    - `version` : The version to be set for the `all` pom.
 -   `projects` : Add the required information about all the projects you want to restructure.
     (NOTE : Expects an array of project details objects.)
+    (NOTE : For multiple projects create separate copies of the info section for each project)
     -   `projectPath` : The absolute path to the project folder.
     -   `existingContentPackageFolder` : relative path(s) (w.r.t. the project folder) to the existing
      content package(s) that needs to be restructured. (NOTE : Expects an array of relative paths to 
@@ -96,6 +99,8 @@ The repository modernizer expects the following configurations to be specified f
     -   `artifactId` : The prefix that is to be used to set the artifactId for all newly
         created `ui.apps` and `ui.content` packages.
     -   `appTitle` : The application title.
+    -   `appId` : The application Id (will be used for config and package folder names)
+    -   `version` : The version used for content packages.
 
 Example:
 
@@ -111,15 +116,20 @@ repositoryModernizer:
     artifactId: xyz-aem-parent
     # the application title to be set for the parent pom
     appTitle: XYZ-AEM Parent
+    # version to be to be set for the parent pom
+    version: 1.0.0-SNAPSHOT
   # information required for all package
   all:
     # prefix that is to be used to set the artifactId for all package
     artifactId: xyz-aem
     # application title
     appTitle: XYZ-AEM Code Repository
-  # information about projects
+    # version to be set for all pom
+    version: 1.0.0-SNAPSHOT
+  # information about projects (expects an array of project information)
+  # NOTE : For multiple projects create separate copies of the info section for each project
   projects:
-    - # absolute path to the project folder
+    - # absolute path to the XYZ project folder
       projectPath: /Users/{username}/some/path/to/xyz-aem
       # Array of relative path(s) (w.r.t. the project folder) to the existing content package(s) that needs to be restructured.
       # NOTE : only content packages are expected here, NOT bundle/jar artifacts
@@ -127,7 +137,6 @@ repositoryModernizer:
         - /ui.apps
         - /ui.content
         - /ui.permissions
-        - /oak-index-definitions
       # relative path (w.r.t. the existing content package folder) to the filter.xml file
       # (If not specified, default path `/src/main/content/META-INF/vault/filter.xml` will be used.)
       relativePathToExistingFilterXml:
@@ -138,6 +147,31 @@ repositoryModernizer:
       artifactId: xyz-content-aem
       # application title
       appTitle: XYZ
+      # application ID (will be used for config and package folder names)
+      appId: xyz-app
+      # project specific version to be used for content packages
+      version: 2.0.0-SNAPSHOT
+    - # absolute path to the ABC project folder
+      projectPath: /Users/{username}/some/path/to/abc-aem
+      # Array of relative path(s) (w.r.t. the project folder) to the existing content package(s) that needs to be restructured.
+      # NOTE : only content packages are expected here, NOT bundle/jar artifacts
+      existingContentPackageFolder:
+        - /content
+        - /oak-index-definitions
+      # relative path (w.r.t. the existing content package folder) to the filter.xml file
+      # (If not specified, default path `/src/main/content/META-INF/vault/filter.xml` will be used.)
+      relativePathToExistingFilterXml:
+      # relative path (w.r.t. the existing content package folder) to the jcr_root directory
+      # (If not specified, default path `/src/main/content/jcr_root` will be used)
+      relativePathToExistingJcrRoot:
+      # prefix that is to be used to set the artifactId for newly created ui.apps and ui.content packages
+      artifactId: abc-content-aem
+      # application title
+      appTitle: ABC
+      # application ID (will be used for config and package folder names)
+      appId: abc-app
+      # project specific version to be used for content packages
+      version: 2.0.0-SNAPSHOT
 ```
 
 ### index-converter

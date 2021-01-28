@@ -16,19 +16,36 @@ const path = require("path");
 const yaml = require("js-yaml");
 
 const configFileName = "aem-migration-config.yaml";
+
+// base paths for resources
+// when it is being executed from cloned repo
 const baseRepoResourcePath = path.join(
     path.dirname(__dirname),
     "node_modules",
     "@adobe",
     "aem-cs-source-migration-repository-modernizer"
 );
-
+// when it is being executed as a aio-cli-plugin
+if (!fs.existsSync(baseRepoResourcePath)) {
+    baseRepoResourcePath = path.join(
+        path.dirname(path.dirname(__dirname)),
+        "aem-cs-source-migration-repository-modernizer"
+    );
+}
+// when it is being executed from cloned repo
 const baseIndexDefResourcePath = path.join(
     path.dirname(__dirname),
     "node_modules",
     "@adobe",
     "aem-cs-source-migration-index-converter"
 );
+// when it is being executed as a aio-cli-plugin
+if (!fs.existsSync(baseIndexDefResourcePath)) {
+    baseIndexDefResourcePath = path.join(
+        path.dirname(path.dirname(__dirname)),
+        "aem-cs-source-migration-index-converter"
+    );
+}
 
 function clearOutputFolder(outputFolderPath) {
     // if `output` folder already exists, delete it

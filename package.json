@@ -15,7 +15,7 @@
         "@adobe/aio-lib-core-logging": "^1.1.0",
         "@adobe/aem-cs-source-migration-dispatcher-converter": "^0.0.2",
         "@adobe/aem-cs-source-migration-commons": "^0.0.3",
-        "@adobe/aem-cs-source-migration-repository-modernizer": "^0.0.4",
+        "@adobe/aem-cs-source-migration-repository-modernizer": "^0.0.5",
         "@adobe/aem-cs-source-migration-index-converter": "^0.0.1",
         "@oclif/command": "^1.6.1",
         "@oclif/config": "^1.15.1",

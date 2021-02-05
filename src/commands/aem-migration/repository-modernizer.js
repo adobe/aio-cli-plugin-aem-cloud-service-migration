@@ -22,18 +22,30 @@ class RepositoryModernizerCommand extends Command {
         try {
             helper.clearOutputFolder(Commons.constants.TARGET_PROJECT_FOLDER);
             let config = helper.readConfigFile(this.config.configDir);
-            await RepositoryModernizer.performModernization(
-                config.repositoryModernizer,
-                helper.baseRepoResourcePath
-            );
-            this.log("Restructuring Completed!");
-            this.log(
-                `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for restructured project packages.`
-            );
-            this.log(
-                `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`
-            );
-            this.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
+            if (
+                await RepositoryModernizer.checkConfig(
+                    config.repositoryModernizer
+                )
+            ) {
+                await RepositoryModernizer.performModernization(
+                    config.repositoryModernizer,
+                    helper.baseRepoResourcePath
+                );
+                this.log("Restructuring Completed!");
+                this.log(
+                    `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for restructured project packages.`
+                );
+                this.log(
+                    `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`
+                );
+                this.log(
+                    `Please check ${Commons.constants.LOG_FILE} for logs.\n`
+                );
+            } else {
+                this.log(
+                    `Missing configuration! Please check ${Commons.constants.LOG_FILE} for more information.\n`
+                );
+            }
         } catch (e) {
             this.error(e);
         }

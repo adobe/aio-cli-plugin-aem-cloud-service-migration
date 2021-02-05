@@ -143,6 +143,9 @@ Refer to Code: *[src/commands/aem-migration/dispatcher-converter.js](./src/comma
 
 This command restructures an existing projects packages into AEM as a Cloud Service compatible packages.
 
+Please see [here](https://github.com/adobe/aem-cloud-service-source-migration/blob/master/packages/repository-modernizer/README.md)
+ to know more about how the tool works, known limitations and what needs to be handled manually.
+
 ### Configurations
 
 Refer to [config](./config/README.md)
@@ -176,6 +179,9 @@ Refer to Code: *[src/commands/aem-migration/repository-modernizer.js](./src/comm
 ## Command: `aio aem-migration:index-converter`
 
 This command migrates existing Custom Oak Index Defintions into AEM as a Cloud Service compatible Custom Oak Index Defintions.
+
+Please see [here](https://github.com/adobe/aem-cloud-service-source-migration/blob/master/packages/index-converter/README.md)
+ to know more about how the tool works, known limitations and what needs to be handled manually.
 
 ### Configurations
 

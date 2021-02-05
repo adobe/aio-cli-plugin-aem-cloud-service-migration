@@ -59,11 +59,15 @@ describe("Test Command", () => {
             };
             helper.clearOutputFolder.mockResolvedValue(true);
             helper.readConfigFile.mockReturnValue(config);
+            RepositoryModernizer.checkConfig.mockResolvedValue(true);
             RepositoryModernizer.performModernization.mockResolvedValue(true);
             return command.run().then(() => {
                 expect(helper.readConfigFile).toHaveBeenCalledWith(configDir);
                 expect(helper.clearOutputFolder).toHaveBeenCalledWith(
                     Commons.constants.TARGET_PROJECT_FOLDER
+                );
+                expect(RepositoryModernizer.checkConfig).toHaveBeenCalledWith(
+                    config.repositoryModernizer
                 );
                 expect(
                     RepositoryModernizer.performModernization
@@ -71,6 +75,27 @@ describe("Test Command", () => {
                     config.repositoryModernizer,
                     helper.baseRepoResourcePath
                 );
+            });
+        });
+
+        test("verify missing configuration", () => {
+            command.config = {
+                configDir: configDir,
+            };
+            helper.clearOutputFolder.mockResolvedValue(true);
+            helper.readConfigFile.mockReturnValue(config);
+            RepositoryModernizer.checkConfig.mockResolvedValue(false);
+            return command.run().then(() => {
+                expect(helper.readConfigFile).toHaveBeenCalledWith(configDir);
+                expect(helper.clearOutputFolder).toHaveBeenCalledWith(
+                    Commons.constants.TARGET_PROJECT_FOLDER
+                );
+                expect(RepositoryModernizer.checkConfig).toHaveBeenCalledWith(
+                    config.repositoryModernizer
+                );
+                expect(
+                    RepositoryModernizer.performModernization
+                ).not.toHaveBeenCalled();
             });
         });
 

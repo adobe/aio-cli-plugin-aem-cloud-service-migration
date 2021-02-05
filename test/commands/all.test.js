@@ -69,6 +69,7 @@ describe("Test Command", () => {
             helper.clearOutputFolder.mockResolvedValue(true);
             helper.readConfigFile.mockReturnValue(config);
             helper.createBaseDispatcherConfig.mockResolvedValue(true);
+            RepositoryModernizer.checkConfig.mockResolvedValue(true);
             RepositoryModernizer.performModernization.mockResolvedValue(true);
             IndexConverter.performIndexConversion.mockResolvedValue(true);
             return command.run().then(() => {
@@ -110,6 +111,7 @@ describe("Test Command", () => {
             helper.clearOutputFolder.mockResolvedValue(true);
             helper.readConfigFile.mockReturnValue(config);
             helper.createBaseDispatcherConfig.mockResolvedValue(true);
+            RepositoryModernizer.checkConfig.mockResolvedValue(true);
             RepositoryModernizer.performModernization.mockResolvedValue(true);
             IndexConverter.performIndexConversion.mockResolvedValue(true);
             return command.run().then(() => {
@@ -135,6 +137,47 @@ describe("Test Command", () => {
                     config.repositoryModernizer,
                     helper.baseRepoResourcePath
                 );
+                expect(
+                    IndexConverter.performIndexConversion
+                ).toHaveBeenCalledWith(
+                    config.indexConverter,
+                    helper.baseIndexDefResourcePath
+                );
+            });
+        });
+
+        test("calls with missing configuration", () => {
+            command.config = {
+                configDir: configDir,
+            };
+            helper.clearOutputFolder.mockResolvedValue(true);
+            helper.readConfigFile.mockReturnValue(config);
+            helper.createBaseDispatcherConfig.mockResolvedValue(true);
+            RepositoryModernizer.checkConfig.mockResolvedValue(false);
+            IndexConverter.performIndexConversion.mockResolvedValue(true);
+            return command.run().then(() => {
+                expect(helper.readConfigFile).toHaveBeenCalledWith(configDir);
+                expect(helper.clearOutputFolder).toHaveBeenCalledWith(
+                    Commons.constants.TARGET_DISPATCHER_FOLDER
+                );
+                expect(helper.clearOutputFolder).toHaveBeenCalledWith(
+                    Commons.constants.TARGET_PROJECT_FOLDER
+                );
+                expect(helper.clearOutputFolder).toHaveBeenCalledWith(
+                    Commons.constants.TARGET_INDEX_FOLDER
+                );
+                expect(
+                    DispatcherConverter.SingleFilesConverter
+                ).toHaveBeenCalledTimes(1);
+                expect(DispatcherConverter.mockTransform).toHaveBeenCalledTimes(
+                    1
+                );
+                expect(RepositoryModernizer.checkConfig).toHaveBeenCalledWith(
+                    config.repositoryModernizer
+                );
+                expect(
+                    RepositoryModernizer.performModernization
+                ).not.toHaveBeenCalled();
                 expect(
                     IndexConverter.performIndexConversion
                 ).toHaveBeenCalledWith(

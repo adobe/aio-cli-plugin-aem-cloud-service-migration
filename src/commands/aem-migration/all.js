@@ -52,18 +52,24 @@ async function runRepositoryModernizer(config, command) {
     helper.clearOutputFolder(Commons.constants.TARGET_PROJECT_FOLDER);
     command.log("\n********** Executing Repository Modernizer **********");
     command.log("Restructuring Repository...");
-    await RepositoryModernizer.performModernization(
-        config.repositoryModernizer,
-        helper.baseRepoResourcePath
-    );
-    command.log("Restructuring Completed!");
-    command.log(
-        `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for restructured project packages.`
-    );
-    command.log(
-        `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`
-    );
-    command.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
+    if (await RepositoryModernizer.checkConfig(config.repositoryModernizer)) {
+        await RepositoryModernizer.performModernization(
+            config.repositoryModernizer,
+            helper.baseRepoResourcePath
+        );
+        command.log("Restructuring Completed!");
+        command.log(
+            `Please check ${Commons.constants.TARGET_PROJECT_SRC_FOLDER} folder for restructured project packages.`
+        );
+        command.log(
+            `Please check ${Commons.constants.TARGET_PROJECT_FOLDER} for summary report.`
+        );
+        command.log(`Please check ${Commons.constants.LOG_FILE} for logs.\n`);
+    } else {
+        command.log(
+            `Missing configuration! Please check ${Commons.constants.LOG_FILE} for more information.\n`
+        );
+    }
 }
 
 async function runIndexConverter(config, command) {

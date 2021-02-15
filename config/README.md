@@ -4,12 +4,18 @@
 
 In order to run the aio-cli commands and execute the underlying migration tools, you need to create a copy of 
 [aem-migration-config.yaml](./aem-migration-config.yaml) file (with the SAME NAME) in your local file system's 
-CLI config directory.
+CLI config directory :
 
 -   Unix: `~/.config/@adobe/aio-cli`
 -   Windows: `%LOCALAPPDATA%\@adobe\aio-cli`
 
+NOTE : Please create the required CLI config directory structure if it is not already present,
+ and create a copy of the [aem-migration-config.yaml](./aem-migration-config.yaml) file inside.
+
 ## Configuring the migration tools
+The [aem-migration-config.yaml](./aem-migration-config.yaml) contains the configuration template for
+ all the code refactoring tools. Please configure only the relevant section for each tool that you want to
+  execute (other tools' configuration sections do not need to be filled) .
 
 ### dispatcher-converter
 The dispatcher converter configuration uses YAML to define necessary configurations. Due to the
@@ -81,8 +87,8 @@ The repository modernizer expects the following configurations to be specified f
     - `artifactId` : The `artifactId` to be set for the parent pom.
     - `appTitle` : The application title to be set for the parent pom.
     - `version` : The version to be set for the parent pom.
--   `all` : Add the required information for `all` package
-    - `artifactId` : The prefix that is to be used to set the artifactId for the `all` package.
+-   `all` : Add the required information for `all` and `analyse` packages
+    - `artifactId` : The prefix that is to be used to set the artifactId for the `all` and `analyse` packages.
     - `appTitle` : The application title.
     - `version` : The version to be set for the `all` pom.
 -   `projects` : Add the required information about all the projects you want to restructure.
@@ -118,9 +124,9 @@ repositoryModernizer:
     appTitle: XYZ-AEM Parent
     # version to be to be set for the parent pom
     version: 1.0.0-SNAPSHOT
-  # information required for all package
+  # information required for all and analyse packages
   all:
-    # prefix that is to be used to set the artifactId for all package
+    # prefix that is to be used to set the artifactId for all and analyse packages
     artifactId: xyz-aem
     # application title
     appTitle: XYZ-AEM Code Repository

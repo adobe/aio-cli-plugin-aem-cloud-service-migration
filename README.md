@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/@adobe/aio-cli-plugin-aem-cloud-service-migration.svg)](https://npmjs.org/package/@adobe/aio-cli-plugin-aem-cloud-service-migration)
 [![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-cli-plugin-aem-cloud-service-migration.svg)](https://npmjs.org/package/@adobe/aio-cli-plugin-aem-cloud-service-migration)
-[![Build Status](https://travis-ci.org/adobe/aio-cli-plugin-aem-cloud-service-migration.svg?branch=master)](https://travis-ci.org/adobe/aio-cli-plugin-aem-cloud-service-migration)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-cli-plugin-aem-cloud-service-migration/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-cli-plugin-aem-cloud-service-migration/)
 
@@ -49,11 +48,9 @@ customers code, repository structure, and configurations on user's local machine
    
 # Setting up necessary Adobe I/O Dependencies
 
-* Install aio-cli core libraries`$ npm install -g @adobe/aio-cli`
+* Install the Adobe I/O CLI (_if you haven't already_) `$ npm install -g @adobe/aio-cli`
 
-* Install AEM cloud service migration aio plugin `$ npm install -g @adobe/aio-cli-plugin-aem-cloud-service-migration`
-
-* Link AEM cloud service migration plugin with aio `$ aio plugins:install @adobe/aio-cli-plugin-aem-cloud-service-migration`
+* Install AEM cloud service migration plugin with aio `$ aio plugins:install @adobe/aio-cli-plugin-aem-cloud-service-migration`
 
 * When you run `$ aio aem-migration --help`, you should be able to see `aem-cloud-service-migration` as an available
  plugin with its sub-commands.
@@ -61,7 +58,7 @@ customers code, repository structure, and configurations on user's local machine
 # Updating
 
 ```sh-session
-$ npm install -g @adobe/aio-cli-plugin-aem-cloud-service-migration
+$ aio plugins:install @adobe/aio-cli-plugin-aem-cloud-service-migration
 ```
 
 # Working

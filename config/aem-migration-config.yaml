@@ -8,7 +8,7 @@ dispatcherConverter:
         # Path to the httpd.conf file (the main apache config file).
         # If `vhostsToConvert` is not specified you can use this property to find vhosts by parsing the main apache file
         httpdSrc:
-        # Array of paths to vhosts files you wish to convert to cloud service configurations.
+        # Array of paths to vhosts files and/or vhost folders containing vhost files you wish to convert to cloud service configurations.
         vhostsToConvert:
         # Array of mapped objects that replace existing variables with new variables.
         # The original variable is first and the variable to replace is second.
@@ -71,6 +71,20 @@ repositoryModernizer:
           appId:
           # project specific version to be used for content packages
           version:
+          # OSGi config folders that need to be renamed.
+          # The existing/source OSGi config folder PATH (JCR path stating from '/apps') is expected as key
+          # and the replacement OSGi folder NAME is expected as value. See examples below :
+          #    /apps/my-appId/config.prod : config.publish.prod
+          #    /apps/system/config.author.dev1 : config.author.dev
+          #    /apps/system/config.author.dev2 : config.author.dev
+          # NOTE :
+          #    1. All OSGi config folders under the same path and with same replacement name will be MERGED
+          #       (as configured in above example).
+          #    2. If there exists OSGi config files with the same pid/filename in more than one config folders
+          #       which are to be merged, they will not be overwritten. A warning regrading the same will be
+          #       generated in the summary report and result log file. User would need to manually evaluate
+          #       which config to persist
+          osgiFoldersToRename:
 indexConverter:
     # Path to the jcr_root directory of the package containing the Ensure Index Definitions
     # (please ignore if there are no Ensure Index Definitions)

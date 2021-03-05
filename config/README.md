@@ -29,7 +29,7 @@ The dispatcher converter configuration uses YAML to define necessary configurati
 | sdkSrc* | Path to your dispatcher sdk source code.  You must include the `src` folder itself in the path. |
 | onPremise/dispatcherAnySrc | Path to the dispatcher.any file. |
 | onPremise/httpdSrc | Path to the httpd.conf file (the main apache config file) - If `vhostsToConvert` is not specified you can use this property to find vhosts by parsing the main apache file. |
-| onPremise/vhostsToConvert | Array of paths to vhosts files you wish to convert to cloud service configurations. |
+| onPremise/vhostsToConvert | Array of paths to vhosts files and/or vhost folders containing vhost files you wish to convert to cloud service configurations. |
 | onPremise/variablesToReplace | Array of mapped objects that replace existing variables with new variables. The original variable is first and the variable to replace is second. |
 | onPremise/appendToVhosts | This can be a file that you want to append to every vhost file in case you need logic added to all configurations. This is useful to replace logic that was once stored in your main apache config file. |
 | onPremise/pathToPrepend | Array of paths to existing dispatcher configuration root folders to scan for the included files. These paths help to map includes in the configurations to their current location in the provided folder structure. |
@@ -50,10 +50,11 @@ dispatcherConverter:
         # Path to the httpd.conf file (the main apache config file)
         # If `vhostsToConvert` is not specified you can use this property to find vhosts by parsing the main apache file
         httpdSrc: "/Users/{username}/some/path/to/httpd.conf"
-        # Array of paths to vhosts files you wish to convert to cloud service configurations
+        # Array of paths to vhosts files and/or vhost folders containing vhost files you wish to convert to cloud service configurations
         vhostsToConvert:
             - "/Users/{username}/some/path/to/mywebsite.vhost"
             - "/Users/{username}/some/path/to/myotherwebsite.vhost"
+            - "/Users/{username}/some/path/to/vhostfolder"
         # Array of mapped objects that replace existing variables with new variables.
         # The original variable is first and the variable to replace is second
         variablesToReplace:
@@ -107,6 +108,16 @@ The repository modernizer expects the following configurations to be specified f
     -   `appTitle` : The application title.
     -   `appId` : The application Id (will be used for config and package folder names)
     -   `version` : The version used for content packages.
+    -   `osgiFoldersToRename` : OSGi config folders that need to be renamed. The existing/source OSGi
+	    config folder PATH (JCR path starting from '/apps') is expected as key, and the replacement OSGi
+		folder NAME is expected as value.
+
+        (NOTE 1 : All OSGi config folders under the same path and with same replacement name will be MERGED.)
+
+        (NOTE 2 : If there exists OSGi config files with the same pid/filename in more than one config folders
+                  which are to be merged, they will not be overwritten. A warning regrading the same will be
+                  generated in the summary report and result log file. User would need to manually evaluate
+                  which config to persist.)
 
 Example:
 
@@ -157,6 +168,26 @@ repositoryModernizer:
       appId: xyz-app
       # project specific version to be used for content packages
       version: 2.0.0-SNAPSHOT
+      # OSGi config folders that need to be renamed.
+      # The existing/source OSGi config folder PATH (JCR path starting from '/apps') is expected as key
+      # and the replacement OSGi folder NAME is expected as value. See examples below :
+      #    /apps/xyz/config.prod : config.publish.prod
+      #    /apps/system/config.author.dev1 : config.author.dev
+      #    /apps/system/config.author.dev2 : config.author.dev
+      # NOTE :
+      #    1. All OSGi config folders under the same path and with same replacement name will be MERGED
+      #       (as configured in above example).
+      #    2. If there exists OSGi config files with the same pid/filename in more than one config folders
+      #       which are to be merged, they will not be overwritten. A warning regrading the same will be
+      #       generated in the summary report and result log file. User would need to manually evaluate
+      #       which config to persist
+      osgiFoldersToRename:
+          /apps/xyz/config.dev1: config.author.dev
+          /apps/xyz/config.dev2: config.author.dev
+          /apps/system/config.author.localdev: config.author.dev
+          /apps/system/config.author.dev1: config.author.dev
+          /apps/system/config.prod: config.publish.prod
+          /apps/system/config.publish: config.publish.prod
     - # absolute path to the ABC project folder
       projectPath: /Users/{username}/some/path/to/abc-aem
       # Array of relative path(s) (w.r.t. the project folder) to the existing content package(s) that needs to be restructured.
@@ -178,6 +209,25 @@ repositoryModernizer:
       appId: abc-app
       # project specific version to be used for content packages
       version: 2.0.0-SNAPSHOT
+      # OSGi config folders that need to be renamed.
+      # The existing/source OSGi config folder PATH (JCR path starting from '/apps') is expected as key
+      # and the replacement OSGi folder NAME is expected as value. See examples below :
+      #    /apps/my-appId/config.prod : config.publish.prod
+      #    /apps/system/config.author.dev1 : config.author.dev
+      #    /apps/system/config.author.dev2 : config.author.dev
+      # NOTE :
+      #    1. All OSGi config folders under the same path and with same replacement name will be MERGED
+      #       (as configured in above example).
+      #    2. If there exists OSGi config files with the same pid/filename in more than one config folders
+      #       which are to be merged, they will not be overwritten. A warning regrading the same will be
+      #       generated in the summary report and result log file. User would need to manually evaluate
+      #       which config to persist
+      osgiFoldersToRename:
+          /apps/abc/config.author.dev1: config.author.dev
+          /apps/abc/config.author.dev2: config.author.dev
+          /apps/abc/config.author.localdev: config.author.dev
+          /apps/abc/config.prod: config.publish.prod
+          /apps/abc/config.publish: config.publish.prod
 ```
 
 ### index-converter

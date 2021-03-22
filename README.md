@@ -222,17 +222,23 @@ EXAMPLE
 
 Refer to Code: *[src/commands/aem-migration/index-converter.js](./src/commands/aem-migration/index-converter.js)*
 
-
 # Adding New Commands
 
 Follow the steps below to add a new command:
 
 1. Create a new javascript file, named after the command, in `src/commands/aem-migration`.
 
-1. Use the contents of `src/commands/aem-migration/dispatcher-converter.js` as a starting point for your command,
+2. Use the contents of `src/commands/aem-migration/dispatcher-converter.js` as a starting point for your command,
  paying particular attention to the command's `flags`, `args`, and `description`. Refer to [https://oclif.io](https://oclif.io/) for additional information and features.
 
-1. Ensure that the file's exports include an object with a property matching the command name.
+3. Ensure that the file's exports include an object with a property matching the command name.
+
+# Publishing to npm
+This repository has been configured to automatically publish the plugin to `npm` registry.
+ It requires a commit to be made to the `master` branch with the required semver bump made
+ to the package version in the [package.json](./package.json). This commit will automatically
+ trigger the [Github Action](https://github.com/adobe/aio-cli-plugin-aem-cloud-service-migration/blob/master/.github/workflows/on-push-publish-to-npm.yml)
+ which will publish the package to `npm` registry.
 
 # Contributing
 

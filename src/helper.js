@@ -69,7 +69,7 @@ function readConfigFile(configDirPath) {
         throw new Error(`Config file ${configFilePath} not found!`);
     }
     const yamlFile = fs.readFileSync(configFilePath, "utf8");
-    return yaml.safeLoad(yamlFile);
+    return yaml.load(yamlFile);
 }
 
 function createBaseDispatcherConfig(src) {

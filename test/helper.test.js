@@ -38,7 +38,7 @@ describe("test readConfigFile()", () => {
     test("reads config file", async () => {
         const configFileName = "aem-migration-config.yaml";
         const configDir = path.join(process.cwd(), "config");
-        const config = yaml.safeLoad(
+        const config = yaml.load(
             fs.readFileSync(path.join(configDir, configFileName), "utf8")
         );
         return expect(helper.readConfigFile(configDir)).toEqual(config);

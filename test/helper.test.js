@@ -35,7 +35,16 @@ describe("test readConfigFile()", () => {
         jest.clearAllMocks();
     });
 
-    test("reads config file", async () => {
+    test("reads local config file", async () => {
+        const configFileName = "aem-migration-config.yaml";
+        const configDir = path.join(process.cwd(), "aio-cli");
+        const config = yaml.safeLoad(
+            fs.readFileSync(path.join(process.cwd(), ".aio-cli", configFileName), "utf8")
+        );
+        return expect(helper.readConfigFile(configDir)).toEqual(config);
+    });
+
+    test("reads global config file", async () => {
         const configFileName = "aem-migration-config.yaml";
         const configDir = path.join(process.cwd(), "config");
         const config = yaml.safeLoad(

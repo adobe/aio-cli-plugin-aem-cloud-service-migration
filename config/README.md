@@ -3,8 +3,14 @@
 ## Development
 
 In order to run the aio-cli commands and execute the underlying migration tools, you need to create a copy of 
-[aem-migration-config.yaml](./aem-migration-config.yaml) file (with the SAME NAME) in your local file system's 
-CLI config directory :
+[aem-migration-config.yaml](./aem-migration-config.yaml) file (with the SAME NAME). This file can be placed either in the local
+file system, or in the CLI config directory :
+
+**Local Project Location**:
+
+- `./.aio-cli`
+
+**CLI config directory**:
 
 -   Unix: `~/.config/@adobe/aio-cli`
 -   Windows: `%LOCALAPPDATA%\@adobe\aio-cli`

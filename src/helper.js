@@ -64,12 +64,20 @@ function clearOutputFolder(outputFolderPath) {
 }
 
 function readConfigFile(configDirPath) {
-    let configFilePath = path.join(configDirPath, configFileName);
-    if (!fs.existsSync(configFilePath)) {
-        throw new Error(`Config file ${configFilePath} not found!`);
+    const localDirPath = path.join(process.cwd(), `.${path.basename(configDirPath)}`);
+    let configFilePath = path.join(localDirPath, configFileName);
+    let yamlFile;
+    if (fs.existsSync(configFilePath)) {
+        yamlFile = fs.readFileSync(configFilePath, "utf8");
+    } else {
+        Commons.logger.warn(`Local config file ${configFilePath} not found, using global file.`);
+        configFilePath = path.join(configDirPath, configFileName);
+        if (!fs.existsSync(configFilePath)) {
+            throw new Error(`Config file ${configFilePath} not found!`);
+        }
+        yamlFile = fs.readFileSync(configFilePath, "utf8");
     }
-    const yamlFile = fs.readFileSync(configFilePath, "utf8");
-    return yaml.load(yamlFile);
+    return yaml.safeLoad(yamlFile);
 }
 
 function createBaseDispatcherConfig(src) {

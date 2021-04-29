@@ -22,7 +22,7 @@ jest.mock("@adobe/aem-cs-source-migration-dispatcher-converter");
 
 const configFileName = "aem-migration-config.yaml";
 const configDir = path.join(process.cwd(), "config");
-const config = yaml.safeLoad(
+const config = yaml.load(
     fs.readFileSync(path.join(configDir, configFileName), "utf8")
 );
 

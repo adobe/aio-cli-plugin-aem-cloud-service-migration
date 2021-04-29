@@ -1,0 +1,17 @@
+name: Workflow for Codecov Action
+on: [push, pull_request]
+
+jobs:
+
+  codecoverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - run: npm install
+      - run: npm test
+        
+      - name: upload code coverage
+        run: bash <(curl -s https://codecov.io/bash)

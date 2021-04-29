@@ -114,6 +114,8 @@ The repository modernizer expects the following configurations to be specified f
     -   `appTitle` : The application title.
     -   `appId` : The application Id (will be used for config and package folder names)
     -   `version` : The version used for content packages.
+    -   `coreBundles` : Array of relative path(s) (w.r.t. the project folder) to the existing code bundles
+        (these bundles will be embedded in the `all` package).
     -   `osgiFoldersToRename` : OSGi config folders that need to be renamed. The existing/source OSGi
 	    config folder PATH (JCR path starting from '/apps') is expected as key, and the replacement OSGi
 		folder NAME is expected as value.
@@ -174,6 +176,10 @@ repositoryModernizer:
       appId: xyz-app
       # project specific version to be used for content packages
       version: 2.0.0-SNAPSHOT
+      # Array of relative path(s) (w.r.t. the project folder) to the existing code bundles (will be embedded in the all package).
+      coreBundles:
+          - /core
+          - /api
       # OSGi config folders that need to be renamed.
       # The existing/source OSGi config folder PATH (JCR path starting from '/apps') is expected as key
       # and the replacement OSGi folder NAME is expected as value. See examples below :
@@ -215,6 +221,9 @@ repositoryModernizer:
       appId: abc-app
       # project specific version to be used for content packages
       version: 2.0.0-SNAPSHOT
+      # Array of relative path(s) (w.r.t. the project folder) to the existing code bundles (will be embedded in the all package).
+      coreBundles:
+          - /core
       # OSGi config folders that need to be renamed.
       # The existing/source OSGi config folder PATH (JCR path starting from '/apps') is expected as key
       # and the replacement OSGi folder NAME is expected as value. See examples below :

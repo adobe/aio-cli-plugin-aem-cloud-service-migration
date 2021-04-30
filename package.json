@@ -13,10 +13,10 @@
     "dependencies": {
         "@adobe/aio-lib-core-config": "^2.0.0",
         "@adobe/aio-lib-core-logging": "^1.1.0",
-        "@adobe/aem-cs-source-migration-dispatcher-converter": "^1.1.1",
+        "@adobe/aem-cs-source-migration-dispatcher-converter": "^1.2.0",
         "@adobe/aem-cs-source-migration-commons": "^0.0.3",
-        "@adobe/aem-cs-source-migration-repository-modernizer": "^1.1.1",
-        "@adobe/aem-cs-source-migration-index-converter": "^0.1.0",
+        "@adobe/aem-cs-source-migration-repository-modernizer": "^1.1.2",
+        "@adobe/aem-cs-source-migration-index-converter": "^0.1.1",
         "@oclif/command": "^1.6.1",
         "@oclif/config": "^1.15.1",
         "@oclif/errors": "^1.1.2",

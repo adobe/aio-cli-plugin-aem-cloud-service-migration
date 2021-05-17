@@ -105,3 +105,6 @@ indexConverter:
     # Path to the existing package `filter.xml` file
     # eg /Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml
     filterXMLPath:
+workflowMigrator:
+    # Absolute path to the project folder
+    projectPath:

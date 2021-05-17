@@ -14,6 +14,7 @@ const DispatcherConverter = require("@adobe/aem-cs-source-migration-dispatcher-c
 const RepositoryModernizer = require("@adobe/aem-cs-source-migration-repository-modernizer");
 const IndexConverter = require("@adobe/aem-cs-source-migration-index-converter");
 const helper = require("../../src/helper");
+const constants = require("../../src/constants");
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
@@ -68,6 +69,7 @@ describe("Test Command", () => {
             };
             helper.clearOutputFolder.mockResolvedValue(true);
             helper.readConfigFile.mockReturnValue(config);
+            helper.fetchLatestReleasedAsset.mockResolvedValue(true);
             helper.createBaseDispatcherConfig.mockResolvedValue(true);
             RepositoryModernizer.checkConfig.mockResolvedValue(true);
             RepositoryModernizer.performModernization.mockResolvedValue(true);
@@ -100,6 +102,11 @@ describe("Test Command", () => {
                 ).toHaveBeenCalledWith(
                     config.indexConverter,
                     helper.baseIndexDefResourcePath
+                );
+                expect(helper.fetchLatestReleasedAsset).toHaveBeenCalledWith(
+                    constants.WF_MIGRATOR_REPO_OWNER,
+                    constants.WF_MIGRATOR_REPO_NAME,
+                    constants.WF_MIGRATOR_JAR
                 );
             });
         });
@@ -142,6 +149,11 @@ describe("Test Command", () => {
                 ).toHaveBeenCalledWith(
                     config.indexConverter,
                     helper.baseIndexDefResourcePath
+                );
+                expect(helper.fetchLatestReleasedAsset).toHaveBeenCalledWith(
+                    constants.WF_MIGRATOR_REPO_OWNER,
+                    constants.WF_MIGRATOR_REPO_NAME,
+                    constants.WF_MIGRATOR_JAR
                 );
             });
         });

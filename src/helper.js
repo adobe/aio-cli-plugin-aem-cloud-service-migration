@@ -11,6 +11,8 @@ governing permissions and limitations under the License.
 */
 
 const Commons = require("@adobe/aem-cs-source-migration-commons");
+const constants = require("./constants");
+const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
@@ -77,7 +79,7 @@ function readConfigFile(configDirPath) {
         }
         yamlFile = fs.readFileSync(configFilePath, "utf8");
     }
-    return yaml.safeLoad(yamlFile);
+    return yaml.load(yamlFile);
 }
 
 function createBaseDispatcherConfig(src) {
@@ -87,10 +89,73 @@ function createBaseDispatcherConfig(src) {
     );
 }
 
+async function fetchLatestReleasedAsset(
+    githubRepoOwner,
+    githubRepoName,
+    destinationAssetName
+) {
+    let url =
+        constants.GITHUB_API +
+        githubRepoOwner +
+        constants.URL_PATH_SEPARATOR +
+        githubRepoName +
+        constants.LATEST_RELEASED_ASSET_PATH;
+    try {
+        let response = await axios.get(url);
+        if (response.status === 200) {
+            // create the required folder structure
+            fs.mkdirSync(constants.TARGET_WORKFLOW_FOLDER, { recursive: true });
+            let downloadUrl = response.data.assets[0].browser_download_url;
+            let writer = fs.createWriteStream(
+                path.join(
+                    constants.TARGET_WORKFLOW_FOLDER,
+                    destinationAssetName
+                )
+            );
+            Commons.logger.info(
+                `Fetching the latest released artifact info from ${githubRepoName}.`
+            );
+            return axios({
+                method: "get",
+                url: downloadUrl,
+                responseType: "stream",
+            }).then((response) => {
+                //ensure that the user can call `then()` only when the file has
+                //been downloaded entirely.
+                return new Promise((resolve, reject) => {
+                    response.data.pipe(writer);
+                    let error = null;
+                    writer.on("error", (err) => {
+                        error = err;
+                        writer.close();
+                        reject(err);
+                    });
+                    writer.on("close", () => {
+                        if (!error) {
+                            resolve(true);
+                        }
+                        //no need to call the reject here, as it will have been called in the
+                        //'error' stream;
+                    });
+                });
+            });
+        } else {
+            throw new Error(
+                `Error while fetching the latest released artifact info from ${githubRepoName} : ${response.status}!`
+            );
+        }
+    } catch (e) {
+        throw new Error(
+            `Error while fetching the latest released artifact info from ${githubRepoName}!`
+        );
+    }
+}
+
 module.exports = {
     baseRepoResourcePath,
     baseIndexDefResourcePath,
     clearOutputFolder,
     createBaseDispatcherConfig,
     readConfigFile,
+    fetchLatestReleasedAsset,
 };

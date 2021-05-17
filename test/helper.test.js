@@ -10,14 +10,18 @@ governing permissions and limitations under the License.
 */
 const Commons = require("@adobe/aem-cs-source-migration-commons");
 const helper = require("../src/helper");
+const constants = require("../src/constants");
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const { stdout } = require("stdout-stderr");
+const axios = require("axios");
+const MockAdapter  = require("axios-mock-adapter");
 
 jest.mock("@adobe/aem-cs-source-migration-commons");
 
 const dir = "./test/testFolder";
+const mock = new MockAdapter(axios);
 
 beforeAll(() => stdout.start());
 afterAll(() => stdout.stop());
@@ -38,7 +42,7 @@ describe("test readConfigFile()", () => {
     test("reads local config file", async () => {
         const configFileName = "aem-migration-config.yaml";
         const configDir = path.join(process.cwd(), "aio-cli");
-        const config = yaml.safeLoad(
+        const config = yaml.load(
             fs.readFileSync(path.join(process.cwd(), ".aio-cli", configFileName), "utf8")
         );
         return expect(helper.readConfigFile(configDir)).toEqual(config);
@@ -86,5 +90,57 @@ describe("test createBaseDispatcherConfig()", () => {
             dir,
             Commons.constants.TARGET_DISPATCHER_SRC_FOLDER
         );
+    });
+});
+
+describe("test fetchLatestReleasedAsset()", () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+    const latestRelease = {
+        "assets":[
+           {
+              "browser_download_url":"https://github.com/adobe/aem-cloud-migration/releases/download/v0.3.0/wf-migrator-0.3.0.jar"
+           }
+        ]
+    };
+
+    test("fetches the latest release response", async () => {
+        mock.onGet(
+            constants.GITHUB_API +
+            constants.WF_MIGRATOR_REPO_OWNER +
+            constants.URL_PATH_SEPARATOR +
+            constants.WF_MIGRATOR_REPO_NAME +
+            constants.LATEST_RELEASED_ASSET_PATH
+        ).reply(200, latestRelease);
+
+        mock.onGet("https://github.com/adobe/aem-cloud-migration/releases/download/v0.3.0/wf-migrator-0.3.0.jar").reply(function () {
+            return new Promise(function (resolve) {
+                resolve([200, fs.createReadStream(path.join(__dirname, 'resources/wf-migrator.jar'))]);
+            });
+        });
+        const response =  await helper.fetchLatestReleasedAsset(
+            constants.WF_MIGRATOR_REPO_OWNER,
+            constants.WF_MIGRATOR_REPO_NAME,
+            constants.WF_MIGRATOR_JAR
+        );
+        expect(response).toEqual(true);
+        expect(fs.existsSync(constants.TARGET_WORKFLOW_FOLDER)).toEqual(true);
+    });
+
+    test("test release api response with failure", async () => {
+        mock.onGet(
+            constants.GITHUB_API +
+            constants.WF_MIGRATOR_REPO_OWNER +
+            constants.URL_PATH_SEPARATOR +
+            constants.WF_MIGRATOR_REPO_NAME +
+            constants.LATEST_RELEASED_ASSET_PATH
+        ).reply(500, {});
+
+        await expect (helper.fetchLatestReleasedAsset(
+            constants.WF_MIGRATOR_REPO_OWNER,
+            constants.WF_MIGRATOR_REPO_NAME,
+            constants.WF_MIGRATOR_JAR
+        )).rejects.toThrow(Error); 
     });
 });

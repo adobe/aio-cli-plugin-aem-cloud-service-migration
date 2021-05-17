@@ -15,7 +15,17 @@ const Commons = require("@adobe/aem-cs-source-migration-commons");
 const RepositoryModernizer = require("@adobe/aem-cs-source-migration-repository-modernizer");
 const DispatcherConverter = require("@adobe/aem-cs-source-migration-dispatcher-converter");
 const IndexConverter = require("@adobe/aem-cs-source-migration-index-converter");
+const constants = require("../../constants");
 const helper = require("../../helper");
+const util = require("util");
+const path = require("path");
+const exec = util.promisify(require("child_process").exec);
+
+const jarFile = path.join(
+    process.cwd(),
+    constants.TARGET_WORKFLOW_FOLDER,
+    constants.WF_MIGRATOR_JAR
+);
 
 async function runDispatcherConverter(config, command) {
     helper.clearOutputFolder(Commons.constants.TARGET_DISPATCHER_FOLDER);
@@ -72,6 +82,42 @@ async function runRepositoryModernizer(config, command) {
     }
 }
 
+async function runWorkflowMigrator(config, command) {
+    helper.clearOutputFolder(constants.TARGET_WORKFLOW_FOLDER);
+    command.log("\n********** Executing Workflow Migrator **********");
+    helper
+        .fetchLatestReleasedAsset(
+            constants.WF_MIGRATOR_REPO_OWNER,
+            constants.WF_MIGRATOR_REPO_NAME,
+            constants.WF_MIGRATOR_JAR
+        )
+        .then(async () => {
+            Commons.logger.info(
+                `Downloaded of ${constants.WF_MIGRATOR_JAR} from ${constants.WF_MIGRATOR_REPO_NAME} successful.`
+            );
+            const runCommand =
+                    "java -jar " +
+                    jarFile + // jar file location
+                    " " +
+                    config.workflowMigrator.projectPath + // the source project path
+                    " " +
+                    constants.TARGET_WORKFLOW_FOLDER; // summary report destination
+            const { stderr } = await exec(runCommand);
+            if (stderr) {
+                command.log(`Error: ${stderr}`);
+            } else {
+                command.log("Workflow migration Completed!");
+                command.log(
+                    `Please check ${constants.TARGET_WORKFLOW_FOLDER} for summary report.\n`
+                );
+                Commons.logger.info(`Workflow migration completed.`);
+            }
+        })
+        .catch((e) => {
+            command.log(e);
+        });
+}
+
 async function runIndexConverter(config, command) {
     helper.clearOutputFolder(Commons.constants.TARGET_INDEX_FOLDER);
     command.log("\n********** Executing Index Converter **********");
@@ -87,6 +133,7 @@ class AllCommand extends Command {
             let config = helper.readConfigFile(this.config.configDir);
             await runDispatcherConverter(config, this);
             await runRepositoryModernizer(config, this);
+            await runWorkflowMigrator(config, this);
             await runIndexConverter(config, this);
         } catch (e) {
             this.error(e);

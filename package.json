@@ -21,7 +21,8 @@
         "@oclif/config": "^1.15.1",
         "@oclif/errors": "^1.1.2",
         "js-yaml": "^3.14.0",
-        "yaml": "^1.10.0"
+        "yaml": "^1.10.0",
+        "axios-mock-adapter": "^1.19.0"
     },
     "devDependencies": {
         "@adobe/eslint-config-aio-lib-config": "^1.2.0",

@@ -45,7 +45,7 @@ class WorkflowMigratorCommand extends Command {
                 )
                 .then(async () => {
                     Commons.logger.info(
-                        `Downloaded of ${constants.WF_MIGRATOR_JAR} from ${constants.WF_MIGRATOR_REPO_NAME} successful.`
+                        `Downloading of ${constants.WF_MIGRATOR_JAR} from ${constants.WF_MIGRATOR_REPO_NAME} successful.`
                     );
                     const { stderr } = await exec(runCommand);
                     if (stderr) {
@@ -68,8 +68,17 @@ class WorkflowMigratorCommand extends Command {
 }
 
 WorkflowMigratorCommand.description = `
-Automatically migrate asset processing workflows from on-premise or AMS deployments of AEM
- to processing profiles and OSGi Configurations for use in AEM Assets as a Cloud Service.`;
+This script will perform an automated migration from custom workflow configurations for asset processing to the corresponding configurations that are required by AEM as a Cloud Service.  After executing the script, the transformed code can be committed to a test branch and deployed to a Cloud Service development environment for testing and validation.
+
+When run, the script will perform the following actions:
+
+#### Create Maven Projects
+The following maven projects will be created:
+
+- aem-cloud-migration.apps - for immutable content that is to be deployed under /apps
+- aem-cloud-migration.content - for mutable content that is to be deployed elsewhere, such as /conf
+
+Each project will only be created if it is required.  The created projects will be added as modules to the reactor POM.  In cases where the project has been migrated to follow the [new package structures](https://docs.adobe.com/content/help/en/experience-manager-cloud-service/implementing/developing/aem-project-content-package-structure.html), we will integrate these projects into the container content package as well.`;
 
 WorkflowMigratorCommand.examples = ["$ aio aem-migration:workflow-migrator"];
 

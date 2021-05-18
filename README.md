@@ -94,7 +94,7 @@ DESCRIPTION
   * dispatcher-converter
   * repository-modernizer
   * index-converter
-  * worklow-migrator
+  * workflow-migrator
 
 EXAMPLES
   $ aio aem-migration:all
@@ -225,7 +225,7 @@ Refer to Code: *[src/commands/aem-migration/index-converter.js](./src/commands/a
 
 ## Command: `aio aem-migration:workflow-migrator`
 
-This command migrates asset processing workflows from on-premise or AMS deployments of AEM to processing profiles and OSGi configurations for use in AEM Assets as a Cloud Service..
+This command migrates asset processing workflows from on-premise or AMS deployments of AEM to processing profiles and OSGi configurations for use in AEM Assets as a Cloud Service.
 
 Please see [here](https://github.com/adobe/aem-cloud-migration/blob/master/README.md)
  to know more about how the tool works, known limitations and what needs to be handled manually.
@@ -248,7 +248,7 @@ DESCRIPTION
 When run, the script will perform the following actions:
 
 #### Create Maven Projects
-Up to Maven projects will be created:
+The following maven projects will be created:
 
 - aem-cloud-migration.apps - for immutable content that is to be deployed under /apps
 - aem-cloud-migration.content - for mutable content that is to be deployed elsewhere, such as /conf

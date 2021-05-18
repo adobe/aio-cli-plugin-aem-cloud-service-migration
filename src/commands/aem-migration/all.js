@@ -93,7 +93,7 @@ async function runWorkflowMigrator(config, command) {
         )
         .then(async () => {
             Commons.logger.info(
-                `Downloaded of ${constants.WF_MIGRATOR_JAR} from ${constants.WF_MIGRATOR_REPO_NAME} successful.`
+                `Downloading of ${constants.WF_MIGRATOR_JAR} from ${constants.WF_MIGRATOR_REPO_NAME} successful.`
             );
             const runCommand =
                     "java -jar " +

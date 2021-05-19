@@ -30,13 +30,6 @@ class WorkflowMigratorCommand extends Command {
         try {
             helper.clearOutputFolder(constants.TARGET_WORKFLOW_FOLDER);
             let config = helper.readConfigFile(this.config.configDir);
-            const runCommand =
-                "java -jar " +
-                jarFile + // jar file location
-                " " +
-                config.workflowMigrator.projectPath + // the source project path
-                " " +
-                constants.TARGET_WORKFLOW_FOLDER; // summary report destination
             helper
                 .fetchLatestReleasedAsset(
                     constants.WF_MIGRATOR_REPO_OWNER,
@@ -47,15 +40,24 @@ class WorkflowMigratorCommand extends Command {
                     Commons.logger.info(
                         `Downloading of ${constants.WF_MIGRATOR_JAR} from ${constants.WF_MIGRATOR_REPO_NAME} successful.`
                     );
-                    const { stderr } = await exec(runCommand);
-                    if (stderr) {
-                        this.log(`Error: ${stderr}`);
-                    } else {
-                        this.log("Workflow migration Completed!");
-                        this.log(
-                            `Please check ${constants.TARGET_WORKFLOW_FOLDER} for summary report.\n`
-                        );
-                        Commons.logger.info(`Workflow migration completed.`);
+                    for (const project of config.workflowMigrator.projects) {
+                        const runCommand =
+                        "java -jar " +
+                        jarFile + // jar file location
+                        " " +
+                        project.projectPath + // the source project path
+                        " " +
+                        constants.TARGET_WORKFLOW_FOLDER; // summary report destination
+                        const { stderr } = await exec(runCommand);
+                        if (stderr) {
+                            this.log(`Error: ${stderr}`);
+                        } else {
+                            this.log(`Workflow migration Completed for ${project.projectPath}`);
+                            this.log(
+                                `Please check ${constants.TARGET_WORKFLOW_FOLDER} for summary report.\n`
+                            );
+                            Commons.logger.info(`Workflow migration Completed for ${project.projectPath}`);
+                        }
                     }
                 })
                 .catch((e) => {

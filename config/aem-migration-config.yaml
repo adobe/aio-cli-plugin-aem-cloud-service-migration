@@ -106,5 +106,7 @@ indexConverter:
     # eg /Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml
     filterXMLPath:
 workflowMigrator:
-    # Absolute path to the project folder
-    projectPath:
+    # information about projects (expects an array of project information)
+    projects:
+        - # absolute path to the project folder
+          projectPath:

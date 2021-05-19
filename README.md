@@ -93,8 +93,10 @@ DESCRIPTION
   Available migration tools :
   * dispatcher-converter
   * repository-modernizer
-  * index-converter
   * workflow-migrator
+  * index-converter
+
+ This command runs the tools in the above sequence & workflow migration if configured, is done in-place taking modernized code in the "target" folder as the source.
 
 EXAMPLES
   $ aio aem-migration:all

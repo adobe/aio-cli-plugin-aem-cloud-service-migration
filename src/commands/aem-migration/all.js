@@ -19,6 +19,7 @@ const constants = require("../../constants");
 const helper = require("../../helper");
 const util = require("util");
 const path = require("path");
+const fs = require("fs");
 const exec = util.promisify(require("child_process").exec);
 
 const jarFile = path.join(
@@ -85,6 +86,14 @@ async function runRepositoryModernizer(config, command) {
 async function runWorkflowMigrator(config, command) {
     helper.clearOutputFolder(constants.TARGET_WORKFLOW_FOLDER);
     command.log("\n********** Executing Workflow Migrator **********");
+    for (const project of config.workflowMigrator.projects) { 
+        if (project.projectPath == null) {
+            // no wf-migrator related configs found.
+            command.log(`Missing configuration! Please check ${Commons.constants.LOG_FILE} for more information.\n`);
+            Commons.logger.log(`No configs found for Workflow migration`);
+            return;
+        }
+    }
     helper
         .fetchLatestReleasedAsset(
             constants.WF_MIGRATOR_REPO_OWNER,
@@ -95,22 +104,29 @@ async function runWorkflowMigrator(config, command) {
             Commons.logger.info(
                 `Downloading of ${constants.WF_MIGRATOR_JAR} from ${constants.WF_MIGRATOR_REPO_NAME} successful.`
             );
-            const runCommand =
+            for (const project of config.workflowMigrator.projects) {
+                if (
+                    fs.readdirSync(path.join(process.cwd(), Commons.constants.TARGET_PROJECT_SRC_FOLDER))
+                        .includes(path.basename(project.projectPath))
+                ) {
+                    const runCommand =
                     "java -jar " +
                     jarFile + // jar file location
                     " " +
-                    config.workflowMigrator.projectPath + // the source project path
+                    path.join(process.cwd(), Commons.constants.TARGET_PROJECT_SRC_FOLDER, path.basename(project.projectPath)) + // the source project path
                     " " +
                     constants.TARGET_WORKFLOW_FOLDER; // summary report destination
-            const { stderr } = await exec(runCommand);
-            if (stderr) {
-                command.log(`Error: ${stderr}`);
-            } else {
-                command.log("Workflow migration Completed!");
-                command.log(
-                    `Please check ${constants.TARGET_WORKFLOW_FOLDER} for summary report.\n`
-                );
-                Commons.logger.info(`Workflow migration completed.`);
+                    const { stderr } = await exec(runCommand);
+                    if (stderr) {
+                        this.log(`Error: ${stderr}`);
+                    } else {
+                        command.log(`Workflow migration Completed for ${path.join(process.cwd(), Commons.constants.TARGET_PROJECT_SRC_FOLDER, path.basename(project.projectPath))}`);
+                        command.log(
+                            `Please check ${constants.TARGET_WORKFLOW_FOLDER} for summary report.\n`
+                        );
+                        Commons.logger.info(`Workflow migration Completed for ${path.join(process.cwd(), Commons.constants.TARGET_PROJECT_SRC_FOLDER, path.basename(project.projectPath))}`);
+                    }
+                }
             }
         })
         .catch((e) => {
@@ -133,6 +149,7 @@ class AllCommand extends Command {
             let config = helper.readConfigFile(this.config.configDir);
             await runDispatcherConverter(config, this);
             await runRepositoryModernizer(config, this);
+            // this does in-place migration in the target folder
             await runWorkflowMigrator(config, this);
             await runIndexConverter(config, this);
         } catch (e) {
@@ -145,7 +162,10 @@ AllCommand.description = `execute all source migration tools.
 Available migration tools :
 * dispatcher-converter
 * repository-modernizer
-* index-converter`;
+* workflow-migrator
+* index-converter
+
+This command runs the tools in the above sequence & workflow migration if configured, is done in-place taking modernized code in the "target" folder as the source.`;
 
 AllCommand.flags = {
     type: flags.string({

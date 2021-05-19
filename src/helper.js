@@ -82,6 +82,16 @@ function readConfigFile(configDirPath) {
     return yaml.load(yamlFile);
 }
 
+function isWorkflowConfigValid(config) {
+    for (const project of config.projects) { 
+        if (project.projectPath == null) {
+            Commons.logger.warn(`Invalid config found for Workflow migration`);
+            return false;
+        }
+    }
+    return true;
+}
+
 function createBaseDispatcherConfig(src) {
     Commons.util.copyFolderSync(
         src,
@@ -158,4 +168,5 @@ module.exports = {
     createBaseDispatcherConfig,
     readConfigFile,
     fetchLatestReleasedAsset,
+    isWorkflowConfigValid,
 };

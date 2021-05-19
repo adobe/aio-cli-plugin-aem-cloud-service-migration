@@ -143,4 +143,12 @@ describe("test fetchLatestReleasedAsset()", () => {
             constants.WF_MIGRATOR_JAR
         )).rejects.toThrow(Error); 
     });
+
+    test("test valid config for workflow migrator", async () => {
+        const configFileName = "aem-migration-config.yaml";
+        const config = yaml.load(
+            fs.readFileSync(path.join(process.cwd(), 'config', configFileName), "utf8")
+        );
+        expect (helper.isWorkflowConfigValid(config.workflowMigrator)).toEqual(false); 
+    });
 });

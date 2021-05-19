@@ -69,6 +69,7 @@ describe("Test Command", () => {
             };
             helper.clearOutputFolder.mockResolvedValue(true);
             helper.readConfigFile.mockReturnValue(config);
+            helper.isWorkflowConfigValid.mockReturnValue(true);
             helper.fetchLatestReleasedAsset.mockResolvedValue(true);
             helper.createBaseDispatcherConfig.mockResolvedValue(true);
             RepositoryModernizer.checkConfig.mockResolvedValue(true);

@@ -86,13 +86,10 @@ async function runRepositoryModernizer(config, command) {
 async function runWorkflowMigrator(config, command) {
     helper.clearOutputFolder(constants.TARGET_WORKFLOW_FOLDER);
     command.log("\n********** Executing Workflow Migrator **********");
-    for (const project of config.workflowMigrator.projects) { 
-        if (project.projectPath == null) {
-            // no wf-migrator related configs found.
-            command.log(`Missing configuration! Please check ${Commons.constants.LOG_FILE} for more information.\n`);
-            Commons.logger.log(`No configs found for Workflow migration`);
-            return;
-        }
+    if (!helper.isWorkflowConfigValid(config.workflowMigrator)) {
+        // invalid wf-migrator related configs found.
+        command.log(`Invalid configuration! Please check ${Commons.constants.LOG_FILE} for more information.\n`);
+        return;    
     }
     helper
         .fetchLatestReleasedAsset(

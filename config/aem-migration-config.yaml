@@ -110,3 +110,4 @@ workflowMigrator:
     projects:
         - # absolute path to the project folder
           projectPath:
+            

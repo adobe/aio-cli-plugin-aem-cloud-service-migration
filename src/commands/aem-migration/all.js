@@ -120,7 +120,7 @@ async function runWorkflowMigrator(config, command) {
                 constants.TARGET_WORKFLOW_FOLDER; // summary report destination
                 const { stderr } = await exec(runCommand);
                 if (stderr) {
-                    this.log(`Error: ${stderr}`);
+                    command.log(`Error: ${stderr}`);
                 } else {
                     command.log(`Workflow migration Completed for ${projectPathToRun}`);
                     command.log(
@@ -152,7 +152,7 @@ class AllCommand extends Command {
             await runRepositoryModernizer(config, this);
             // this does in-place migration in the target folder
             await runWorkflowMigrator(config, this);
-            await runIndexConverter(config, this);
+            //await runIndexConverter(config, this);
         } catch (e) {
             this.error(e);
         }

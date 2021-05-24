@@ -152,7 +152,7 @@ class AllCommand extends Command {
             await runRepositoryModernizer(config, this);
             // this does in-place migration in the target folder
             await runWorkflowMigrator(config, this);
-            //await runIndexConverter(config, this);
+            await runIndexConverter(config, this);
         } catch (e) {
             this.error(e);
         }

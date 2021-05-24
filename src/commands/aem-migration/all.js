@@ -102,27 +102,31 @@ async function runWorkflowMigrator(config, command) {
                 `Downloading of ${constants.WF_MIGRATOR_JAR} from ${constants.WF_MIGRATOR_REPO_NAME} successful.`
             );
             for (const project of config.workflowMigrator.projects) {
+                let projectPathToRun = project.projectPath;
                 if (
                     fs.readdirSync(path.join(process.cwd(), Commons.constants.TARGET_PROJECT_SRC_FOLDER))
                         .includes(path.basename(project.projectPath))
                 ) {
-                    const runCommand =
-                    "java -jar " +
-                    jarFile + // jar file location
-                    " " +
-                    path.join(process.cwd(), Commons.constants.TARGET_PROJECT_SRC_FOLDER, path.basename(project.projectPath)) + // the source project path
-                    " " +
-                    constants.TARGET_WORKFLOW_FOLDER; // summary report destination
-                    const { stderr } = await exec(runCommand);
-                    if (stderr) {
-                        this.log(`Error: ${stderr}`);
-                    } else {
-                        command.log(`Workflow migration Completed for ${path.join(process.cwd(), Commons.constants.TARGET_PROJECT_SRC_FOLDER, path.basename(project.projectPath))}`);
-                        command.log(
-                            `Please check ${constants.TARGET_WORKFLOW_FOLDER} for summary report.\n`
-                        );
-                        Commons.logger.info(`Workflow migration Completed for ${path.join(process.cwd(), Commons.constants.TARGET_PROJECT_SRC_FOLDER, path.basename(project.projectPath))}`);
-                    }
+                    //override if the path resolves to a valid one
+                    projectPathToRun = path.join(process.cwd(), Commons.constants.TARGET_PROJECT_SRC_FOLDER, path.basename(project.projectPath));
+                }
+                //run the workflow on the effective path
+                const runCommand =
+                "java -jar " +
+                jarFile + // jar file location
+                " " +
+                projectPathToRun + // the source project path
+                " " +
+                constants.TARGET_WORKFLOW_FOLDER; // summary report destination
+                const { stderr } = await exec(runCommand);
+                if (stderr) {
+                    this.log(`Error: ${stderr}`);
+                } else {
+                    command.log(`Workflow migration Completed for ${projectPathToRun}`);
+                    command.log(
+                        `Please check ${constants.TARGET_WORKFLOW_FOLDER} for summary report.\n`
+                    );
+                    Commons.logger.info(`Workflow migration Completed for ${projectPathToRun}`);
                 }
             }
         })

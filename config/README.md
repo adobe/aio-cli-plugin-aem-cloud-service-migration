@@ -278,3 +278,16 @@ indexConverter:
     # eg /Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml
     filterXMLPath:"/Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml"
 ```
+
+### workflow-migrator
+
+The workflow migrator expects the following configurations to be specified for execution :
+-   `projectPath` : The absolute path to the project folder.
+
+Example:
+
+```@yaml
+workflowMigrator:
+    # absolute path to the ABC project folder
+    projectPath: /Users/{username}/some/path/to/abc-aem
+```

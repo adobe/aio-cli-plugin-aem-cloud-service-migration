@@ -93,7 +93,10 @@ DESCRIPTION
   Available migration tools :
   * dispatcher-converter
   * repository-modernizer
+  * workflow-migrator
   * index-converter
+
+ This command runs the tools in the above sequence & workflow migration if configured, is done in-place taking modernized code in the "target" folder as the source.
 
 EXAMPLES
   $ aio aem-migration:all
@@ -221,6 +224,45 @@ EXAMPLE
 ```
 
 Refer to Code: *[src/commands/aem-migration/index-converter.js](./src/commands/aem-migration/index-converter.js)*
+
+## Command: `aio aem-migration:workflow-migrator`
+
+This command migrates asset processing workflows from on-premise or AMS deployments of AEM to processing profiles and OSGi configurations for use in AEM Assets as a Cloud Service.
+
+Please see [here](https://github.com/adobe/aem-cloud-migration/blob/master/README.md)
+ to know more about how the tool works, known limitations and what needs to be handled manually.
+
+### Configurations
+
+Refer to [config](./config/README.md)
+for more info.
+
+```
+USAGE
+  $ aio aem-migration:workflow-migrator
+
+OPTIONS
+  --help                     show help
+
+DESCRIPTION
+  This script will perform an automated migration from custom workflow configurations for asset processing to the corresponding configurations that are required by AEM as a Cloud Service.  After executing the script, the transformed code can be committed to a test branch and deployed to a Cloud Service development environment for testing and validation.
+
+When run, the script will perform the following actions:
+
+#### Create Maven Projects
+The following maven projects will be created:
+
+- aem-cloud-migration.apps - for immutable content that is to be deployed under /apps
+- aem-cloud-migration.content - for mutable content that is to be deployed elsewhere, such as /conf
+
+Each project will only be created if it is required.  The created projects will be added as modules to the reactor POM.  In cases where the project has been migrated to follow the [new package structures](https://docs.adobe.com/content/help/en/experience-manager-cloud-service/implementing/developing/aem-project-content-package-structure.html), we will integrate these projects into the container content package as well.
+
+EXAMPLE
+  $ aio aem-migration:workflow-migrator
+
+```
+
+Refer to Code: *[src/commands/aem-migration/workflow-migrator.js](./src/commands/aem-migration/workflow-migrator.js)*.
 
 # Adding New Commands
 

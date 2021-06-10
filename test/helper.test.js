@@ -112,7 +112,7 @@ describe("test fetchLatestReleasedAsset()", () => {
             constants.URL_PATH_SEPARATOR +
             constants.WF_MIGRATOR_REPO_NAME +
             constants.LATEST_RELEASED_ASSET_PATH
-        ).reply(200, latestRelease);
+        ).replyOnce(200, latestRelease);
 
         mock.onGet("https://github.com/adobe/aem-cloud-migration/releases/download/v0.3.0/wf-migrator-0.3.0.jar").reply(function () {
             return new Promise(function (resolve) {
@@ -135,13 +135,31 @@ describe("test fetchLatestReleasedAsset()", () => {
             constants.URL_PATH_SEPARATOR +
             constants.WF_MIGRATOR_REPO_NAME +
             constants.LATEST_RELEASED_ASSET_PATH
-        ).reply(500, {});
+        ).replyOnce(200, {});
 
         await expect (helper.fetchLatestReleasedAsset(
             constants.WF_MIGRATOR_REPO_OWNER,
             constants.WF_MIGRATOR_REPO_NAME,
             constants.WF_MIGRATOR_JAR
         )).rejects.toThrow(Error); 
+    });
+
+    test("test no release jar in the response", async () => {
+        //incase the jar is not returned in the response with the success code.
+        mock.onGet(
+            constants.GITHUB_API +
+            constants.WF_MIGRATOR_REPO_OWNER +
+            constants.URL_PATH_SEPARATOR +
+            constants.WF_MIGRATOR_REPO_NAME +
+            constants.LATEST_RELEASED_ASSET_PATH
+        ).replyOnce(204, {});
+
+        await expect (helper.fetchLatestReleasedAsset(
+            constants.WF_MIGRATOR_REPO_OWNER,
+            constants.WF_MIGRATOR_REPO_NAME,
+            constants.WF_MIGRATOR_JAR
+        )).rejects.toThrow(Error); 
+        
     });
 
     test("test valid config for workflow migrator", async () => {

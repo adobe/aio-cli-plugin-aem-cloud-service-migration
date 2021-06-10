@@ -116,6 +116,15 @@ describe("Test Command", () => {
             command.config = {
                 configDir: configDir,
             };
+            const projects = [
+                {
+                    projectPath : path.join('Users', 'test', 'test-project'),
+                }
+            ];
+            config.workflowMigrator = {
+                projects : projects,
+            };
+            fs.readdirSync = jest.fn().mockReturnValue(["test-project"]);
             helper.clearOutputFolder.mockResolvedValue(true);
             helper.readConfigFile.mockReturnValue(config);
             helper.createBaseDispatcherConfig.mockResolvedValue(true);

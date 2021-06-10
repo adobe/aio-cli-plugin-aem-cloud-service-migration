@@ -118,13 +118,13 @@ describe("Test Command", () => {
             };
             const projects = [
                 {
-                    projectPath : '',
+                    projectPath : '/Users/test/test-project',
                 }
             ];
             config.workflowMigrator = {
                 projects : projects,
             };
-            fs.readdirSync = jest.fn().mockReturnValue(['']);
+            fs.readdirSync = jest.fn().mockReturnValue([path.join(Commons.constants.TARGET_PROJECT_SRC_FOLDER, "test-project")]);
             helper.clearOutputFolder.mockResolvedValue(true);
             helper.readConfigFile.mockReturnValue(config);
             helper.createBaseDispatcherConfig.mockResolvedValue(true);

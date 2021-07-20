@@ -23,4 +23,8 @@ module.exports = {
     WF_MIGRATOR_REPO_OWNER: "adobe",
 
     WF_MIGRATOR_REPO_NAME: "aem-cloud-migration",
+
+    OPT_IN: "opt-in",
+
+    USE_SOURCES_DIRECTLY: "USE_SOURCES_DIRECTLY",
 };

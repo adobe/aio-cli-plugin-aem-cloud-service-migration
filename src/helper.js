@@ -97,6 +97,12 @@ function createBaseDispatcherConfig(src) {
         src,
         Commons.constants.TARGET_DISPATCHER_SRC_FOLDER
     );
+    // ensures marker file is created if not present as part of dispatcher sdk
+    // marker file is used to validate the dispatcher configurations with latest checks
+    Commons.util.ensureFileExistsSync(
+        constants.USE_SOURCES_DIRECTLY,
+        path.join(Commons.constants.TARGET_DISPATCHER_SRC_FOLDER, constants.OPT_IN)
+    );
 }
 
 async function fetchLatestReleasedAsset(

@@ -10,13 +10,18 @@ governing permissions and limitations under the License.
 */
 
 const mockTransform = jest.fn();
+const checkConfig = jest.fn(()=> {return true});
 
 const AEMDispatcherConfigConverter = jest.fn().mockImplementation(() => {
-    return { transform: mockTransform };
+    return { transform: mockTransform,
+        checkConfig: checkConfig,        
+     };
 });
 
 const SingleFilesConverter = jest.fn().mockImplementation(() => {
-    return { transform: mockTransform };
+    return { transform: mockTransform,
+        checkConfig: checkConfig,        
+    };
 });
 
 module.exports = {

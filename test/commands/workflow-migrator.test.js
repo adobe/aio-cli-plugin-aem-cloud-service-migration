@@ -57,6 +57,7 @@ describe("Test Command", () => {
             command.config = {
                 configDir: configDir,
             };
+            helper.isWorkflowConfigValid.mockReturnValue(true);
             helper.clearOutputFolder.mockResolvedValue(true);
             helper.readConfigFile.mockReturnValue(config);
             helper.fetchLatestReleasedAsset.mockResolvedValue(true);

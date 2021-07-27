@@ -34,20 +34,33 @@ async function runDispatcherConverter(config, command) {
     const flag = flags.type;
     command.log("\n********** Executing Dispatcher Converter **********");
     command.log("Converting Dispatcher Configurations...");
+    let isConfigValid = false;
     if (flag && flag.toLowerCase() === "ams") {
         helper.createBaseDispatcherConfig(config.dispatcherConverter.ams.cfg);
         let aemDispatcherConfigConverter = new DispatcherConverter.AEMDispatcherConfigConverter(
             config.dispatcherConverter,
             Commons.constants.TARGET_DISPATCHER_SRC_FOLDER
         );
-        aemDispatcherConfigConverter.transform();
+        if (aemDispatcherConfigConverter.checkConfig(config.dispatcherConverter)) {
+            isConfigValid = true;
+            aemDispatcherConfigConverter.transform();
+        }
     } else {
         helper.createBaseDispatcherConfig(config.dispatcherConverter.sdkSrc);
         let singleFilesConverter = new DispatcherConverter.SingleFilesConverter(
             config.dispatcherConverter,
             Commons.constants.TARGET_DISPATCHER_SRC_FOLDER
         );
-        singleFilesConverter.transform();
+        if (singleFilesConverter.checkConfig(config.dispatcherConverter)) {
+            isConfigValid = true;
+            singleFilesConverter.transform();
+        }
+    }
+    if (!isConfigValid) {
+        command.log(
+            `Missing configuration! Please check ${Commons.constants.LOG_FILE} for more information.`
+        );
+        return;
     }
     command.log("\nConversion Complete!");
     command.log(

@@ -25,6 +25,7 @@ class DispatcherConverterCommand extends Command {
             );
             let config = helper.readConfigFile(this.config.configDir);
             const { flags } = this.parse(DispatcherConverterCommand);
+            let isConfigValid = false;
             if (flags.type && flags.type.toLowerCase() === "ams") {
                 helper.createBaseDispatcherConfig(
                     config.dispatcherConverter.ams.cfg
@@ -33,7 +34,10 @@ class DispatcherConverterCommand extends Command {
                     config.dispatcherConverter,
                     Commons.constants.TARGET_DISPATCHER_SRC_FOLDER
                 );
-                aemDispatcherConfigConverter.transform();
+                if (aemDispatcherConfigConverter.checkConfig(config.dispatcherConverter)) {
+                    isConfigValid = true;
+                    aemDispatcherConfigConverter.transform();
+                }
             } else {
                 helper.createBaseDispatcherConfig(
                     config.dispatcherConverter.sdkSrc
@@ -42,7 +46,16 @@ class DispatcherConverterCommand extends Command {
                     config.dispatcherConverter,
                     Commons.constants.TARGET_DISPATCHER_SRC_FOLDER
                 );
-                singleFilesConverter.transform();
+                if (singleFilesConverter.checkConfig(config.dispatcherConverter)) {
+                    isConfigValid = true;
+                    singleFilesConverter.transform();
+                }
+            }
+            if (!isConfigValid) {
+                this.log(
+                    `Missing configuration! Please check ${Commons.constants.LOG_FILE} for more information.`
+                );
+                return;
             }
             this.log("\nConversion Complete!");
             this.log(

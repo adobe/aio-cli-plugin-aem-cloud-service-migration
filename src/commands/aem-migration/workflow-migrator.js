@@ -30,6 +30,11 @@ class WorkflowMigratorCommand extends Command {
         try {
             helper.clearOutputFolder(constants.TARGET_WORKFLOW_FOLDER);
             let config = helper.readConfigFile(this.config.configDir);
+            if (!helper.isWorkflowConfigValid(config.workflowMigrator)) {
+                // invalid wf-migrator related configs found.
+                this.log(`Invalid configuration! Please check ${Commons.constants.LOG_FILE} for more information.\n`);
+                return;    
+            }
             helper
                 .fetchLatestReleasedAsset(
                     constants.WF_MIGRATOR_REPO_OWNER,

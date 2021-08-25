@@ -273,10 +273,10 @@ indexConverter:
     # Path to the customer OAK Index Definition directory
     # (please ignore if there are no Oak Index Definitions)
     # eg /Users/xyz/sampleCode/ui.apps/src/main/content/jcr_root/_oak_index
-    customIndexDirectoryPath:"/Users/xyz/sampleCode/ui.apps/src/main/content/jcr_root/_oak_index"
+    customOakIndexDirectoryPath: "/Users/xyz/sampleCode/ui.apps/src/main/content/jcr_root/_oak_index"
     # Path to the existing package `filter.xml` file
     # eg /Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml
-    filterXMLPath:"/Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml"
+    filterXMLPath: "/Users/xyz/sampleCode/ui.apps/src/main/content/META-INF/vault/filter.xml"
 ```
 
 ### workflow-migrator

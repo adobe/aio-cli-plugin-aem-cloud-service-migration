@@ -128,7 +128,7 @@ describe("test fetchLatestReleasedAsset()", () => {
         expect(fs.existsSync(constants.TARGET_WORKFLOW_FOLDER)).toEqual(true);
     });
 
-    test("test release api response with failure", async () => {
+    test("release api response with failure", async () => {
         mock.onGet(
             constants.GITHUB_API +
             constants.WF_MIGRATOR_REPO_OWNER +
@@ -144,7 +144,7 @@ describe("test fetchLatestReleasedAsset()", () => {
         )).rejects.toThrow(Error); 
     });
 
-    test("test no release jar in the response", async () => {
+    test("no release jar in the response", async () => {
         //incase the jar is not returned in the response with the success code.
         mock.onGet(
             constants.GITHUB_API +
@@ -162,7 +162,7 @@ describe("test fetchLatestReleasedAsset()", () => {
         
     });
 
-    test("test valid config for workflow migrator", async () => {
+    test("valid config for workflow migrator", async () => {
         const configFileName = "aem-migration-config.yaml";
         const config = yaml.load(
             fs.readFileSync(path.join(process.cwd(), 'config', configFileName), "utf8")
